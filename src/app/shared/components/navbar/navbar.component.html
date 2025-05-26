@@ -1,0 +1,69 @@
+<!-- Sticky Header -->
+<div class="sticky-header">
+  <div class="desktop-only">
+    <p-menubar [model]="menuItems">
+      <!-- Logo on the left -->
+      <ng-template pTemplate="start">
+        <div class="logo-initials animated-logo" (click)="scrollTo('home')" style="cursor: pointer;">
+          <span class="logo-text">SW</span>
+          <div class="logo-dots">
+            <div class="dot dot1"></div>
+            <div class="dot dot2"></div>
+            <div class="dot dot3"></div>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Menu Items -->
+      <ng-template pTemplate="menuitem" let-item>
+        <a
+          (click)="item.command?.({ originalEvent: $event, item: item })"
+          [ngClass]="{ 'active-link': item.label?.toLowerCase() === activeSection }"
+        >
+          <i *ngIf="item.icon" [class]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </ng-template>
+
+      <!-- Preferences & Hamburger pushed to right -->
+      <ng-template pTemplate="end">
+        <div class="preferences-wrapper custom-button">
+          <app-preferences></app-preferences>
+          <div class="mobile-only hamburger-icon">
+            <p-button
+              icon="pi pi-bars"
+              (onClick)="sidebarVisible = true"
+              class="custom-button"
+              label="Menu"
+            ></p-button>
+          </div>
+        </div>
+      </ng-template>
+    </p-menubar>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<p-sidebar [(visible)]="sidebarVisible" [modal]="true" position="left">
+  <div class="sidebar-content">
+    <div class="sidebar-logo logo-initials animated-logo" (click)="scrollTo('home'); sidebarVisible = false">
+      <span class="logo-text">SW</span>
+      <div class="logo-dots">
+        <div class="dot dot1"></div>
+        <div class="dot dot2"></div>
+        <div class="dot dot3"></div>
+      </div>
+    </div>
+
+    <div class="mobile-menu">
+      <a
+        *ngFor="let item of menuItems"
+        (click)="item.command?.({ originalEvent: $event, item: item }); sidebarVisible = false"
+        [ngClass]="{ 'active-link': item.label?.toLowerCase() === activeSection }"
+      >
+        <i *ngIf="item.icon" [class]="item.icon"></i>
+        {{ item.label }}
+      </a>
+    </div>
+  </div>
+</p-sidebar>

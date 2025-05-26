@@ -1,0 +1,15 @@
+<div *ngIf="animation === 'fadeSlideIn'" [@fadeSlideIn]="visible ? 'visible' : 'hidden'">
+  <ng-content></ng-content>
+</div>
+
+<div *ngIf="animation === 'zoomIn'" [@zoomIn]="visible ? 'visible' : 'hidden'">
+  <ng-content></ng-content>
+</div>
+
+<div *ngIf="animation === 'slideLeft'" [@slideLeft]="visible ? 'visible' : 'hidden'">
+  <ng-content></ng-content>
+</div>
+
+<div *ngIf="animation === 'rotateIn'" [@rotateIn]="visible ? 'visible' : 'hidden'">
+  <ng-content></ng-content>
+</div>

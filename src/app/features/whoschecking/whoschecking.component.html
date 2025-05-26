@@ -1,0 +1,18 @@
+<div class="watching-wrapper" [ngStyle]="{ 'background-image': backgroundGradient }">
+  <h2>Who's Checking?</h2>
+  <div class="profiles">
+    <div
+      class="profile"
+      *ngFor="let user of users"
+      (click)="selectProfile(user)"
+    >
+      <p-avatar
+        class="avatar custom-avatar"
+        [label]="user.initial"
+        [style]="{ 'background-color': user.color }"
+        shape="circle">
+      </p-avatar>
+      <p>{{ user.name }}</p>
+    </div>
+  </div>
+</div>

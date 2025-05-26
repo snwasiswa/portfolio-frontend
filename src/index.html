@@ -4,10 +4,51 @@
   <meta charset="utf-8">
   <title>PortfolioFrontend</title>
   <base href="/">
+  <!-- PrimeNG theme -->
+  <!-- In index.html head -->
+  <link id="app-theme" rel="stylesheet" href="assets/themes/lara-light-blue/theme.css" />
+
+
+
+  <!-- PrimeNG core -->
+  <link rel="stylesheet" href="https://unpkg.com/primeng/resources/primeng.min.css" />
+
+  <!-- PrimeIcons -->
+  <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
-  <app-root></app-root>
+
+  <!-- Video Background -->
+  <video autoplay muted loop playsinline preload="auto" id="bg-video">
+    <!--<source src="https://player.vimeo.com/external/449659688.sd.mp4?s=30480146a845fd5c3ab9fc8390d3e8b1c9730210&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />-->
+    Your browser does not support the video tag.
+    <source src="videos/background.mp4" type="video/mp4" />
+  </video>
+
+
+  <div class="page-container">
+
+  </div>
+  <!-- Angular Root -->
+<app-root></app-root>
 </body>
+ <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const video = document.getElementById('bg-video');
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.warn('Autoplay failed, trying to mute and play:', error);
+          video.muted = true;
+          video.play();
+        });
+      }
+    }
+  });
+</script>
 </html>

@@ -1,0 +1,45 @@
+<div class="page-container">
+  <!-- Academic Projects -->
+  <div class="project-category">
+    <h2>Academic Projects</h2>
+    <div class="scroll-wrapper" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
+      <button class="arrow-btn left" (click)="scroll(academicScroll, -300, 'academic')">&#8592;</button>
+      <div class="scroll-container" #academicScrollContainer>
+        <div class="project-card" *ngFor="let project of academicProjects">
+          <img [src]="project.image" alt="{{ project.name }}" />
+          <div class="project-info">
+            <h4>{{ project.name }}</h4>
+            <p>{{ project.description }}</p>
+          </div>
+        </div>
+      </div>
+      <button class="arrow-btn right" (click)="scroll(academicScroll, 300, 'academic')">&#8594;</button>
+    </div>
+    <div class="dots">
+      <span *ngFor="let _ of getDotCount(academicProjects); let i = index"
+            [class.active]="isDotActive(i, 'academic')"></span>
+    </div>
+  </div>
+
+  <!-- Side Projects -->
+  <div class="project-category">
+    <h2>Side Projects</h2>
+    <div class="scroll-wrapper" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
+      <button class="arrow-btn left" (click)="scroll(sideScroll, -300, 'side')">&#8592;</button>
+      <div class="scroll-container" #sideScrollContainer>
+        <div class="project-card" *ngFor="let project of sideProjects">
+          <img [src]="project.image" alt="{{ project.name }}" />
+          <div class="project-info">
+            <h4>{{ project.name }}</h4>
+            <p>{{ project.description }}</p>
+          </div>
+        </div>
+      </div>
+      <button class="arrow-btn right" (click)="scroll(sideScroll, 300, 'side')">&#8594;</button>
+    </div>
+    <div class="dots">
+      <span *ngFor="let _ of getDotCount(sideProjects); let i = index"
+            [class.active]="isDotActive(i, 'side')"></span>
+    </div>
+  </div>
+</div>

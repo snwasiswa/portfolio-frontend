@@ -1,0 +1,31 @@
+<div class="page-container">
+  <!-- Hero Section with Avatar, Name, Title and Welcome Section -->
+  <!--<section class="hero-section text-white d-flex align-items-center justify-content-between">-->
+  <div class="profile-section bg-dark bg-opacity-75 p-4 rounded" *ngIf="profile">
+    <!-- Avatar, Name, Title -->
+    <div class="profile-info">
+      <h2>About me</h2>
+      <div *ngIf="profile?.biography" [innerHTML]="profile.biography! | safeHtml"></div>
+    </div>
+    <!-- Welcome Section inside Profile Section (right of the avatar) -->
+    <div class="welcome-section">
+      <h3>Where to Find Me</h3>
+      <li class="social-links" *ngIf="profile.links?.length">
+        <ng-container *ngFor="let link of profile.links">
+          <li *ngIf="link.category === 'Link' && link.name">
+            <a [href]="link.url" target="_blank">
+              <em class="fa fa-{{ link.name?.toLowerCase() }}" style="color: steelblue; font-size: 30px;">
+                {{ link.name }}
+              </em>
+            </a>
+          </li>
+        </ng-container>
+      </li>
+      <h3>What's Next!</h3>
+      <p class="lead">
+        If you’re interested in collaborating, hiring, or just chatting tech, feel free to <a href="/contact">
+          get in touch</a> or connect with me on one of the platforms above.
+      </p>
+    </div>
+  </div>
+</div>

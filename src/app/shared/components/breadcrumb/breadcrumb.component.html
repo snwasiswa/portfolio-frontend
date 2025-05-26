@@ -1,0 +1,9 @@
+<nav class="breadcrumb-bar">
+  <span
+    *ngFor="let section of sections"
+    [class.active]="section.id === currentSection"
+    (click)="scrollTo(section.id)"
+  >
+    {{ section.label }}
+  </span>
+</nav>

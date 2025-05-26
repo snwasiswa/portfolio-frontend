@@ -1,0 +1,45 @@
+<div class="page-container">
+  <!-- Hero Section with Avatar, Name, Title and Welcome Section -->
+  <!--<section class="hero-section text-white d-flex align-items-center justify-content-between">-->
+    <div class="profile-section bg-dark bg-opacity-75 p-4 rounded" *ngIf="profile">
+      <!-- Avatar, Name, Title -->
+      <div class="profile-info">
+        <img [src]="profile.avatar" alt="Avatar" class="avatar-img mb-3" />
+        <h1 *ngIf="profile?.user">{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+        <p *ngIf="profile?.title">{{ profile.title }}</p>
+        <p-button label="Learn More" icon="pi pi-arrow-right" routerLink="/about" class="custom-button mt-3"></p-button>
+      </div>
+       <!-- Welcome Section inside Profile Section (right of the avatar) -->
+      <div class="welcome-section">
+        <h2>Welcome!</h2>
+        <p class="lead">
+          I’m a developer with a passion for solving real-world problems through clean, scalable code.
+          Here's a quick look at what I do:
+        </p>
+      </div>
+    </div>
+  <!--</section>-->
+  <!-- Section Previews using PrimeNG Cards -->
+  <section class="container my-4">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-4 mb-4 custom-gradient-card" *ngFor="let section of sections.slice(0, 3)">
+        <p-card [header]="section.title" [style]="{ 'height': '100%' }">
+          <p>{{ section.description }}</p>
+          <p-footer>
+            <p-button label="{{ section.buttonText }}" icon="pi pi-arrow-right" [routerLink]="section.link" class="custom-button mt-3"></p-button>
+          </p-footer>
+        </p-card>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6 mb-4 custom-gradient-card" *ngFor="let section of sections.slice(3)">
+        <p-card [header]="section.title" [style]="{ 'height': '100%' }">
+          <p>{{ section.description }}</p>
+          <p-footer>
+            <p-button label="{{ section.buttonText }}" icon="pi pi-arrow-right" [routerLink]="section.link" class="custom-button mt-3"></p-button>
+          </p-footer>
+        </p-card>
+      </div>
+    </div>
+  </section>
+</div>

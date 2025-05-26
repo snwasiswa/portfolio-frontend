@@ -1,0 +1,46 @@
+<div class="page-container">
+  <div class="contact-form-container">
+    <h2>Get in touch!</h2>
+
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <!-- Name Field -->
+      <div class="p-field">
+        <label for="name">Name</label>
+        <input id="name" type="text" pInputText formControlName="name" />
+        <p-message *ngIf="f.name.touched && f.name.invalid" severity="error" text="Name is required"></p-message>
+      </div>
+
+      <!-- Email Field -->
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText formControlName="email" />
+        <p-message *ngIf="f.email.touched && f.email.invalid" severity="error" text="Valid email is required"></p-message>
+      </div>
+
+      <!-- Phone Field -->
+      <div class="p-field">
+        <label for="phone">Phone</label>
+        <input id="phone" type="text" pInputText formControlName="phone" />
+      </div>
+
+      <!-- Subject Field -->
+      <div class="p-field">
+        <label for="subject">Subject</label>
+        <input id="subject" type="text" pInputText formControlName="subject" />
+      </div>
+
+      <!-- Message Field -->
+      <div class="p-field">
+        <label for="message">Message</label>
+        <textarea id="message" pInputTextarea rows="5" formControlName="message"></textarea>
+        <p-message *ngIf="f.message.touched && f.message.invalid" severity="error" text="Message is required"></p-message>
+      </div>
+
+      <!-- Submit Button -->
+      <button pButton type="submit" label="Submit" class="p-button-success" [disabled]="contactForm.invalid"></button>
+    </form>
+  </div>
+</div>
+
+<!-- Toast Notifications -->
+<p-toast></p-toast>

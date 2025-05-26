@@ -1,1 +1,149 @@
-/* You can add global styles to this file, and also import other style files */
+/* === GLOBAL GRADIENT + BACKGROUND STYLING === */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background: linear-gradient(135deg, #001f3f, #003366, #4b0082, #00bcd4, #00ffcc, #000000);
+  background-size: 800% 800%;
+  animation: gradientShift 30s ease-in-out infinite;
+  color: #ffffff;
+
+  background-image:
+    linear-gradient(135deg, #001f3f, #003366, #4b0082, #00bcd4, #00ffcc, #000000),
+    url('https://www.transparenttextures.com/patterns/stardust.png');
+  background-blend-mode: overlay;
+}
+
+html.my-app-dark {
+  background: linear-gradient(135deg, #000000, #1a1a2e, #3a0ca3, #00b4d8, #00ffcc, #000000);
+  background-size: 800% 800%;
+  animation: gradientShift 30s ease-in-out infinite;
+  background-image:
+    linear-gradient(135deg, #000000, #1a1a2e, #3a0ca3, #00b4d8, #00ffcc, #000000),
+    url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+  background-blend-mode: overlay;
+  color: #ffffff;
+}
+
+/* === BODY LAYOUT === */
+body {
+  font-size: var(--font-size, 14px);
+  margin: 0;
+  position: relative;
+  z-index: 2;
+}
+
+section {
+  scroll-margin-top: 60px;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* === PARALLAX GRADIENT OVERLAY === */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  background: inherit;
+  background-attachment: fixed;
+  background-size: cover;
+  opacity: 0.9;
+}
+
+/* === GRADIENT ANIMATION === */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 100%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* === VIDEO BACKGROUND === */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -4;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* === ANIMATED STAR LAYERS === */
+.stars, .stars2, .stars3 {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  background: transparent url('https://www.script-tutorials.com/demos/360/images/stars.png') repeat;
+  animation: moveStars 200s linear infinite;
+  opacity: 0.5;
+}
+
+.stars2 {
+  background-image: url('https://www.script-tutorials.com/demos/360/images/stars2.png');
+  animation: moveStars 300s linear infinite;
+  opacity: 0.4;
+}
+
+.stars3 {
+  background-image: url('https://www.script-tutorials.com/demos/360/images/stars3.png');
+  animation: moveStars 500s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes moveStars {
+  0% { background-position: 0 0; }
+  100% { background-position: -10000px 5000px; }
+}
+
+/* === FROSTED GLASS PANEL === */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+/* === RESPONSIVE TYPOGRAPHY === */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+    background-size: 300% 300%;
+  }
+  section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+    background-size: 200% 200%;
+  }
+  section {
+    padding: 1rem;
+  }
+}
