@@ -1,6 +1,6 @@
 export interface Portfolio {
   id: number;
-  name?: string;
+  name: string;
   image?: string;
   is_active: boolean;
   slug?: string;

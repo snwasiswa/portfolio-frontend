@@ -7,6 +7,7 @@ import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
 import { SkillsComponent } from '../skills/skills.component';
 import { ProjectsComponent } from '../projects/projects.component';
+import { ResumeComponent } from '../resume/resume.component';
 import { ContactComponent } from '../contact/contact.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { SectionWrapperComponent } from '../../shared/components/section-wrapper/section-wrapper.component';
@@ -23,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http'; // Import HttpClientMod
     AboutComponent,
     SkillsComponent,
     ProjectsComponent,
+    ResumeComponent,
     ContactComponent,
     BreadcrumbComponent,
     FooterComponent,

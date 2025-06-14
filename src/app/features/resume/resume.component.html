@@ -1,1 +1,88 @@
-<p>resume works!</p>
+<div class="page-container">
+  <h2 class="scrolling-text">Resume</h2>
+
+  <div class="custom-tabs">
+    <div class="tab-buttons">
+      <button *ngFor="let tab of tabs" (click)="openTabDialog(tab.label)">
+        <i [class]="tab.icon + ' tab-icon'"></i>
+        <span class="tab-label">{{ tab.label }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating Modal/Dialog -->
+  <div *ngIf="isDialogVisible" class="floating-dialog-overlay" (click)="closeDialog()">
+    <div class="floating-dialog" (click)="$event.stopPropagation()">
+      <div class="dialog-header">
+        <h3>{{ activeTab }}</h3>
+        <button class="close-btn" (click)="closeDialog()">&times;</button>
+      </div>
+
+      <div class="tab-content-panel" [ngSwitch]="activeTab">
+
+        <!-- Education -->
+        <div *ngSwitchCase="'Education'">
+          <div class="content-section" *ngFor="let edu of educations">
+            <h3>{{ edu.degree }} - {{ edu.school }}</h3>
+            <p><strong>Year:</strong> {{ edu.year }}</p>
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div *ngSwitchCase="'Experience'">
+          <div class="content-section" *ngFor="let exp of experiences">
+            <div class="exp-header">
+              <span class="job-title">{{ exp.job_title }}</span>
+              <span class="company-name">at {{ exp.company_name }}</span>
+            </div>
+            <p><strong>Period:</strong> {{ exp.start_date }} - {{ exp.is_current ? 'Present' : exp.end_date }}</p>
+            <div class="project-body" [innerHTML]="(exp.description ?? '') | safeHtml"></div>
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div *ngSwitchCase="'Projects'">
+          <div class="content-section" *ngFor="let proj of projects">
+            <h4>{{ proj.name }} <small>({{ proj.year }})</small></h4>
+            <p class="project-description">{{ proj.description }}</p>
+            <div class="project-body" [innerHTML]="(proj.body ?? '') | safeHtml"></div>
+            <div *ngIf="proj.technology?.length" class="project-tech-stack">
+              <strong>Tech Stack:</strong>
+              <ul class="tech-list">
+                <li *ngFor="let tech of proj.technology">{{ tech }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div *ngSwitchCase="'Skills'">
+          <ul class="skills-list">
+            <li *ngFor="let skill of skills">
+              <div class="skill-label">
+                <i class="pi pi-check-circle"></i> {{ skill.name }}
+              </div>
+              <div class="skill-bar-container" [title]="getSkillTooltip(skill.rating)">
+                <div class="skill-bar" [style.width.%]="getSkillPercentage(skill.rating)"
+                  [ngClass]="getSkillLevelClass(skill.rating)"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Extracurricular -->
+        <div *ngSwitchCase="'Extracurricular'">
+          <div class="content-section" *ngFor="let activity of extracurricular">
+            <h4>{{ activity.title }}</h4>
+            <p>{{ activity.description }}</p>
+          </div>
+        </div>
+
+        <!-- Default -->
+        <div *ngSwitchDefault>
+          <p>No content available.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

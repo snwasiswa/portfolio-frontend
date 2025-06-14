@@ -1,8 +1,8 @@
 export interface Skill {
   id: number;
-  name?: string;
+  name: string;
   image?: string;
-  rating?: number;
+  rating: number;
   is_key_skill: boolean;
   is_hard_skill: boolean;
   is_soft_skill: boolean;

@@ -18,6 +18,9 @@ export class HomeComponent implements OnInit {
   currentYear = new Date().getFullYear();
   profile!: Profile; // holds the fetched profile
 
+  welcomeMessage = 'Welcome!';
+  welcomeMessageChars: string[] = [];
+
   sections = [
     {
       title: 'About Me',
@@ -54,6 +57,9 @@ export class HomeComponent implements OnInit {
   constructor(private profileService: ProfileService) {}
 
 ngOnInit(): void {
+
+  this.welcomeMessageChars = this.welcomeMessage.split('');
+
   this.profileService.getProfile().subscribe({
     next: (data) => {
       if (Array.isArray(data) && data.length > 0) {

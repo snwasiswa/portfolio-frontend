@@ -6,6 +6,7 @@ import { Leadership } from "../leadership/leadership.model";
 import { MyContact } from "../mycontact/mycontact.model";
 import { Portfolio } from "../portfolio/portfolio.model";
 import { Skill } from "../skill/skill.model";
+import { Experience } from "../experience/experience.model";
 
 export interface UserBasic {
   id: number;
@@ -23,15 +24,16 @@ export interface Profile {
   };
   title?: string | null; // Title of the profile (optional)
   biography?: string | null; // Biography text (optional)
-  skills: Skill[]; // Many-to-many relationship with skills
+  all_skills: Skill[]; // Many-to-many relationship with skills
   avatar?: string | null; // URL to the avatar image (optional)
   resume?: string | null; // URL to the resume file (optional)
   work?: string | null; // URL to the work sample (optional)
-  courses: Course[]; // Many-to-many relationship with courses
-  leaderships: Leadership[]; // Many-to-many relationship with leadership roles
-  educations: Education[]; // Many-to-many relationship with education
-  projects: Portfolio[]; // Many-to-many relationship with portfolio projects
-  links: MyContact[]; // Many-to-many relationship with contact links
+  all_courses: Course[]; // Many-to-many relationship with courses
+  all_leaderships: Leadership[]; // Many-to-many relationship with leadership roles
+  all_educations: Education[]; // Many-to-many relationship with education
+  all_projects: Portfolio[]; // Many-to-many relationship with portfolio projects
+  all_links: MyContact[]; // Many-to-many relationship with contact links
+  all_experiences: Experience[];
   get_avatar_url: string;
   get_resume_url: string;
   get_work_samples_url: string;

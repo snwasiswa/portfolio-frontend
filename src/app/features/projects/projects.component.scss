@@ -254,3 +254,21 @@ p-message {
   border-color: #e74c3c;
   transition: border-color 0.3s ease;
 }
+
+
+.scrolling-text {
+  display: inline-block;
+  padding-left: 100%; /* Start offscreen to the right */
+  animation: marquee 10s linear infinite;
+  font-size: 2rem;
+  white-space: nowrap;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

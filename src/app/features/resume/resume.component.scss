@@ -2,30 +2,338 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
-  padding-right: 1.5rem;
 }
 
-.tab-container {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+.scrolling-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 10s linear infinite;
+  font-size: 2rem;
+  white-space: nowrap;
+  color: #fff;
+  overflow: hidden;
 }
 
-button {
-  padding: 10px 20px;
-  cursor: pointer;
-  background-color: #e0e0e0;
-  border: none;
-  border-radius: 4px;
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
-button.active {
-  background-color: #1976d2;
+/* Tabs Container */
+.custom-tabs {
+  border-radius: 10px;
+  padding: 2rem;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   color: white;
+  margin-top: 2rem;
+  transition: background 0.4s ease, transform 0.3s ease;
 }
 
-.tab-content {
-  border: 1px solid #ccc;
-  padding: 15px;
+.custom-tabs:hover {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.85));
+  transform: translateY(-5px);
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tab-buttons button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  width: 25%;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  border: none;
+  border-radius: 16px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 1rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.tab-buttons button:hover {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 16px 30px rgba(0, 200, 255, 0.5);
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.tab-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tab-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Tab content dialog */
+.tab-content-panel {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  //background: #1c1c1e;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
+  color: #f0f0f0;
+  animation: fadeIn 0.4s ease;
+}
+
+/* Content Sections */
+.content-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-left: 12px solid rgba(0, 123, 255, 0.4);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  //background: #232323;
+  border-radius: 20px;
+}
+
+.content-section h4 {
+  color: rgba(0, 123, 255, 0.4);
+  margin-bottom: 0.5rem;
+}
+
+.project-description {
+  margin-bottom: 0.5rem;
+  font-style: italic;
+  color: #bbb;
+}
+
+.project-tech-stack {
+  margin-top: 1rem;
+
+}
+
+.tech-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-list li {
+  background-color: #e0e0e0;
+  padding: 0.3rem 0.6rem;
   border-radius: 4px;
+  font-size: 0.85rem;
+  color: #000;
+}
+
+/* Experience */
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.job-title {
+  font-weight: 600;
+  flex: 1;
+  color: #fff;
+}
+
+.company-name {
+  color: #aaa;
+  font-style: italic;
+  text-align: right;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 50%;
+}
+
+/* Skills */
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.skills-list li {
+  margin-bottom: 1.5rem;
+}
+
+.skill-label {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.skill-label i {
+  margin-right: 0.5rem;
+  color: limegreen;
+}
+
+.skill-bar-container {
+  width: 100%;
+  height: 10px;
+  background-color: #444;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  cursor: help;
+}
+
+.skill-bar {
+  height: 100%;
+  width: 0;
+  opacity: 0;
+  animation: growBar 1s ease-out forwards;
+  transition: width 0.4s ease;
+}
+
+.skill-beginner { background-color: #e67e22; }
+.skill-intermediate { background-color: #3498db; }
+.skill-advanced { background-color: #2ecc71; }
+
+@keyframes growBar {
+  from { width: 0; opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Floating Dialog */
+.floating-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+.floating-dialog {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  border-radius: 20px;
+  padding: 2rem;
+  max-height: 80vh;
+  max-width: 90vw;
+  overflow-y: auto;
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  animation: slideUp 0.3s ease;
+  position: relative;
+  transition:
+    background 0.5s ease,
+    box-shadow 0.5s ease,
+    transform 0.3s ease;
+  cursor: default;
+}
+
+.floating-dialog:hover {
+  background: linear-gradient(120deg, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.4));
+  box-shadow: 0 20px 40px rgba(0, 200, 255, 0.9);
+  transform: scale(1.02);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.floating-dialog:hover .dialog-header {
+  color: #00c8ff;
+}
+
+
+.dialog-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #00c8ff;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .tab-buttons {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tab-buttons button {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: unset;
+    padding: 1.5rem;
+  }
+
+  .tab-icon {
+    font-size: 2rem;
+  }
+
+  .tab-label {
+    font-size: 1rem;
+  }
+
+  .floating-dialog {
+    padding: 1.5rem;
+  }
+
+  .dialog-header h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .scrolling-text {
+    font-size: 1.5rem;
+  }
+
+  .tab-buttons button {
+    padding: 1.2rem;
+  }
+
+  .tab-label {
+    font-size: 0.95rem;
+  }
 }

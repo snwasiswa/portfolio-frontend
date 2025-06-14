@@ -8,6 +8,23 @@
   //color: #fff; /* Text color to white for contrast */
 }
 
+.scrolling-text {
+  display: inline-block;
+  padding-left: 100%; /* Start offscreen to the right */
+  animation: marquee 10s linear infinite;
+  font-size: 2rem;
+  white-space: nowrap;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 /* Styling for the contact form container */
 .contact-form-container {
   max-width: 600px;
@@ -100,7 +117,7 @@ p-message {
 }
 
 /* Add fade-away effect for fields when invalid */
-.p-field input.ng-invalid.ng-touched, 
+.p-field input.ng-invalid.ng-touched,
 .p-field textarea.ng-invalid.ng-touched {
   border-color: #e74c3c;
   transition: border-color 0.3s ease;

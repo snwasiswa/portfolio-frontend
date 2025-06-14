@@ -25,9 +25,8 @@ export class NavbarComponent {
       { label: 'Home', icon: 'pi pi-home', command: () => this.scrollTo('home') },
       { separator: true },
       { label: 'About', icon: 'pi pi-user', command: () => this.scrollTo('about') },
-      { label: 'Projects', icon: 'pi pi-briefcase', command: () => this.scrollTo('projects') },
       { separator: true },
-      { label: 'Skills', icon: 'pi pi-book', command: () => this.scrollTo('skills') },
+      { label: 'Projects', icon: 'pi pi-briefcase', command: () => this.scrollTo('projects') },
       { separator: true },
       { label: 'Resume', icon: 'pi pi-briefcase', command: () => this.scrollTo('resume') },
       { separator: true },
@@ -44,7 +43,7 @@ export class NavbarComponent {
 
   @HostListener('window:scroll', [])
   onScroll() {
-    const sectionIds = ['home', 'about', 'skills', 'projects', 'contact'];
+    const sectionIds = ['home', 'about', 'projects', 'resume', 'contact'];
     for (const id of sectionIds) {
       const el = document.getElementById(id);
       if (el) {
