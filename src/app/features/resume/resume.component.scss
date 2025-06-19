@@ -110,6 +110,7 @@
   margin-bottom: 0.5rem;
 }
 
+
 .project-description {
   margin-bottom: 0.5rem;
   font-style: italic;
@@ -168,6 +169,12 @@
   margin: 1rem 0;
 }
 
+.skills-list-wrapper {
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+
+
 .skills-list li {
   margin-bottom: 1.5rem;
 }
@@ -177,6 +184,7 @@
   flex-wrap: wrap;
   gap: 2rem;
 }
+
 
 .skill-category {
   transition: all 0.3s ease;
@@ -417,3 +425,21 @@
 .toggle-icon {
   margin-left: 8px;
 }
+
+.chevron {
+  transition: transform 0.3s ease;
+  font-size: 1.2rem;
+  color: #00c8ff;
+}
+.chevron.rotated {
+  transform: rotate(180deg);
+}
+
+.edu-details {
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0 1rem;
+  border-radius: 0 0 12px 12px;
+  color: #eee;
+}
+

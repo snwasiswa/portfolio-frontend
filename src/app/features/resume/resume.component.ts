@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ImageModule } from 'primeng/image';
 import { ProfileService } from '../../core/services/profile/profile.service';
 import { Profile } from '../../core/models/profile/profile.model';
 import { Education } from '../../core/models/education/education.model';
@@ -8,13 +14,43 @@ import { Leadership } from '../../core/models/leadership/leadership.model';
 import { Project } from '../../core/models/projects/project.model';
 import { Experience } from '../../core/models/experience/experience.model';
 import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'app-resume',
   standalone: true,
-  imports: [CommonModule, SafeHtmlPipe],
+  imports: [CommonModule, SafeHtmlPipe, ImageModule],
   templateUrl: './resume.component.html',
-  styleUrls: ['./resume.component.scss']
+  styleUrls: ['./resume.component.scss'],
+  animations: [
+    trigger('collapseAnimation', [
+      state(
+        'open',
+        style({
+          height: '*',
+          opacity: 1,
+          padding: '*',
+          marginTop: '1rem'
+        })
+      ),
+      state(
+        'closed',
+        style({
+          height: '0px',
+          opacity: 0,
+          padding: '0 1rem',
+          marginTop: '0rem'
+        })
+      ),
+      transition('open <=> closed', animate('300ms ease-in-out'))
+    ])
+  ]
 })
 export class ResumeComponent {
   activeTab = '';
@@ -28,12 +64,17 @@ export class ResumeComponent {
   projects: Project[] = [];
   leaderships: Leadership[] = [];
 
-  categoryState: { [key: number]: boolean } = {};
+  @ViewChildren('educationSection') educationSections!: QueryList<ElementRef>;
+  @ViewChildren('experienceSection') experienceSections!: QueryList<ElementRef>;
+  @ViewChildren('projectSection') projectSections!: QueryList<ElementRef>;
+  @ViewChildren('leadershipSection') leadershipSections!: QueryList<ElementRef>;
+  @ViewChildren('skillCategorySection') skillCategorySections!: QueryList<ElementRef>;
 
-  extracurricular = [
-    { title: 'Hackathon Winner', description: 'Won 1st place in regional hackathon.' },
-    { title: 'Tech Club', description: 'Led workshops on web development and UI design.' }
-  ];
+  openEducationIndex: number | null = null;
+  openExperienceIndex: number | null = null;
+  openProjectIndex: number | null = null;
+  openLeadershipIndex: number | null = null;
+  openSkillCategoryIndex: number | null = null;
 
   tabs = [
     { label: 'Education', icon: 'pi pi-book' },
@@ -65,42 +106,105 @@ export class ResumeComponent {
     });
   }
 
-  // Choose which categories are full-width (can be dynamic)
   isFullWidthCategory(category: string | undefined): boolean {
-    const fullWidthCategories = ['Soft Skills', 'Languages', 'Other']; // Customize as needed
+    const fullWidthCategories = ['Soft Skills', 'Languages', 'Other'];
     return fullWidthCategories.includes(category ?? '');
   }
 
+  toggleSection(index: number): void {
+    const el = this.educationSections.toArray()[index]?.nativeElement;
+    if (!el) return;
 
-  private groupSkillsByCategory(): void {
-    const categoryMap: { [key: string]: Skill[] } = {};
+    const prevHeight = el.offsetHeight;
+    this.openEducationIndex = this.openEducationIndex === index ? null : index;
 
-    for (const skill of this.skills) {
-      const category = skill.category || 'Uncategorized'; // fallback for undefined
-      if (!categoryMap[category]) {
-        categoryMap[category] = [];
+    setTimeout(() => {
+      const newHeight = el.offsetHeight;
+      const heightDiff = newHeight - prevHeight;
+      if (heightDiff !== 0) {
+        window.scrollBy({ top: heightDiff, behavior: 'auto' });
       }
-      categoryMap[category].push(skill);
-    }
-
-    this.groupedSkills = Object.entries(categoryMap).map(([category, skills]) => ({
-      category,
-      skills
-    }));
+    }, 310);
   }
 
+  toggleExperience(index: number): void {
+    const el = this.experienceSections.toArray()[index]?.nativeElement;
+    if (!el) return;
+
+    const prevHeight = el.offsetHeight;
+    this.openExperienceIndex = this.openExperienceIndex === index ? null : index;
+
+    setTimeout(() => {
+      const newHeight = el.offsetHeight;
+      const heightDiff = newHeight - prevHeight;
+      if (heightDiff !== 0) {
+        window.scrollBy({ top: heightDiff, behavior: 'auto' });
+      }
+    }, 310);
+  }
+
+  toggleProject(index: number): void {
+    const el = this.projectSections.toArray()[index]?.nativeElement;
+    if (!el) return;
+
+    const prevHeight = el.offsetHeight;
+    this.openProjectIndex = this.openProjectIndex === index ? null : index;
+
+    setTimeout(() => {
+      const newHeight = el.offsetHeight;
+      const heightDiff = newHeight - prevHeight;
+      if (heightDiff !== 0) {
+        window.scrollBy({ top: heightDiff, behavior: 'auto' });
+      }
+    }, 310);
+  }
+
+  toggleLeadership(index: number): void {
+    const el = this.leadershipSections.toArray()[index]?.nativeElement;
+    if (!el) return;
+
+    const prevHeight = el.offsetHeight;
+    this.openLeadershipIndex = this.openLeadershipIndex === index ? null : index;
+
+    setTimeout(() => {
+      const newHeight = el.offsetHeight;
+      const heightDiff = newHeight - prevHeight;
+      if (heightDiff !== 0) {
+        window.scrollBy({ top: heightDiff, behavior: 'auto' });
+      }
+    }, 310);
+  }
 
   toggleCategory(index: number): void {
-    this.categoryState[index] = !this.categoryState[index];
+    const el = this.skillCategorySections.toArray()[index]?.nativeElement;
+    if (!el) return;
+
+    const prevHeight = el.offsetHeight;
+    this.openSkillCategoryIndex = this.openSkillCategoryIndex === index ? null : index;
+
+    setTimeout(() => {
+      const newHeight = el.offsetHeight;
+      const heightDiff = newHeight - prevHeight;
+      if (heightDiff !== 0) {
+        window.scrollBy({ top: heightDiff, behavior: 'auto' });
+      }
+    }, 310);
   }
 
   isCategoryOpen(index: number): boolean {
-    return this.categoryState[index] ?? true; // Open by default
+    return this.openSkillCategoryIndex === index;
   }
 
   openTabDialog(tabLabel: string) {
     this.activeTab = tabLabel;
     this.isDialogVisible = true;
+
+    // Reset open indexes on new tab open
+    this.openEducationIndex = null;
+    this.openExperienceIndex = null;
+    this.openProjectIndex = null;
+    this.openLeadershipIndex = null;
+    this.openSkillCategoryIndex = null;
   }
 
   closeDialog() {
@@ -123,5 +227,22 @@ export class ResumeComponent {
     if (score === 3) return 'skill-intermediate';
     if (score >= 4) return 'skill-advanced';
     return '';
+  }
+
+  private groupSkillsByCategory(): void {
+    const categoryMap: { [key: string]: Skill[] } = {};
+
+    for (const skill of this.skills) {
+      const category = skill.category || 'Uncategorized';
+      if (!categoryMap[category]) {
+        categoryMap[category] = [];
+      }
+      categoryMap[category].push(skill);
+    }
+
+    this.groupedSkills = Object.entries(categoryMap).map(([category, skills]) => ({
+      category,
+      skills
+    }));
   }
 }

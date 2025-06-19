@@ -102,6 +102,26 @@
   z-index: 2; /* Ensure link is above gradient */
 }
 
+.link-item {
+  list-style: none;
+}
+
+.link-content {
+  display: flex;
+  align-items: center;     /* Vertical center */
+  justify-content: center; /* Horizontal center if needed */
+  height: 40px;           /* Set a height for vertical centering */
+  text-decoration: none;
+  gap: 10px;               /* Space between icon and name */
+}
+
+.link-name {
+  display: flex;
+  align-items: center;
+  height: 50%;
+}
+
+
 /* Styling for the Profile and Welcome Section background */
 .bg-dark {
   position: relative;

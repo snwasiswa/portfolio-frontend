@@ -21,46 +21,71 @@
       <div class="tab-content-panel" [ngSwitch]="activeTab">
         <!-- Education -->
         <div *ngSwitchCase="'Education'">
-          <div class="content-section" *ngFor="let edu of educations">
-            <h3>{{ edu.degree }} - {{ edu.school }}</h3>
-            <p><strong>Year:</strong> {{ edu.year }}</p>
-            <small>Focus Area: {{ edu.focus_area }}</small>
+          <div #educationSection *ngFor="let edu of educations; let i = index" class="content-section edu-section">
+            <div class="category-header" (click)="toggleSection(i)">
+              <h3>{{ edu.degree }} - {{ edu.school }}</h3>
+              <span class="toggle-icon chevron" [class.rotated]="openEducationIndex === i">▼</span>
+            </div>
+
+            <div class="edu-details" [@collapseAnimation]="openEducationIndex === i ? 'open' : 'closed'">
+              <p><strong>Year:</strong> {{ edu.year }}</p>
+              <small>Focus Area: {{ edu.focus_area }}</small>
+            </div>
           </div>
         </div>
 
         <!-- Experience -->
         <div *ngSwitchCase="'Experience'">
-          <div class="content-section" *ngFor="let exp of experiences">
-            <div class="exp-header">
-              <span class="job-title">{{ exp.job_title }}</span>
-              <span class="company-name">at {{ exp.company_name }}</span>
+          <div #experienceSection class="content-section edu-section" *ngFor="let exp of experiences; let i = index">
+            <div class="category-header" (click)="toggleExperience(i)">
+              <h3>
+                {{ exp.job_title }}
+                <small class="company-name">at {{ exp.company_name }}</small>
+              </h3>
+              <span class="toggle-icon chevron" [class.rotated]="openExperienceIndex === i">▼</span>
             </div>
-            <p><strong>Period:</strong> {{ exp.start_date }} - {{ exp.is_current ? 'Present' : exp.end_date }}</p>
-            <div class="project-body" [innerHTML]="(exp.description ?? '') | safeHtml"></div>
+
+            <div class="edu-details" [@collapseAnimation]="
+                openExperienceIndex === i ? 'open' : 'closed'
+              ">
+              <p>
+                <strong>Period:</strong>
+                {{ exp.start_date }} - {{ exp.is_current ? 'Present' : exp.end_date }}
+              </p>
+              <div class="project-body" [innerHTML]="(exp.description ?? '') | safeHtml"></div>
+            </div>
           </div>
         </div>
 
         <!-- Projects -->
         <div *ngSwitchCase="'Projects'">
-          <div class="content-section" *ngFor="let proj of projects">
-            <h4>{{ proj.name }} <small>({{ proj.year }})</small></h4>
-            <p class="project-description">{{ proj.description }}</p>
-            <div class="project-body" [innerHTML]="(proj.body ?? '') | safeHtml"></div>
-            <div *ngIf="proj.technology?.length" class="project-tech-stack">
-              <strong>Tech Stack:</strong>
-              <ul class="tech-list">
-                <li *ngFor="let tech of proj.technology">{{ tech }}</li>
-              </ul>
+          <div #projectSection class="content-section edu-section" *ngFor="let proj of projects; let i = index">
+            <div class="category-header" (click)="toggleProject(i)">
+              <h3>{{ proj.name }} <small>({{ proj.year }})</small></h3>
+              <span class="toggle-icon chevron" [class.rotated]="openProjectIndex === i">▼</span>
+            </div>
+
+            <div class="edu-details" [@collapseAnimation]="openProjectIndex === i ? 'open' : 'closed'">
+              <p class="project-description">{{ proj.description }}</p>
+              <div class="project-body" [innerHTML]="(proj.body ?? '') | safeHtml"></div>
+              <div *ngIf="proj.technology?.length" class="project-tech-stack">
+                <strong>Tech Stack:</strong>
+                <ul class="tech-list">
+                  <li *ngFor="let tech of proj.technology">{{ tech }}</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Skills -->
         <div *ngSwitchCase="'Skills'" class="skills-wrapper">
-          <div *ngFor="let group of groupedSkills; let i = index" class="skill-category" [ngClass]="{
-                   'full-width': isFullWidthCategory(group.category),
-                   'half-width': !isFullWidthCategory(group.category)
-                    }">
+          <div *ngFor="let group of groupedSkills; let i = index" #skillCategorySection class="skill-category"
+            [ngClass]="{
+      'full-width': isFullWidthCategory(group.category),
+      'half-width': !isFullWidthCategory(group.category)
+    }">
+            <!-- Header: stays fixed -->
             <div class="category-header" (click)="toggleCategory(i)">
               <h3>
                 {{ group.category }}
@@ -68,31 +93,42 @@
               </h3>
             </div>
 
-            <ul class="skills-list" *ngIf="isCategoryOpen(i)">
-              <li *ngFor="let skill of group.skills">
-                <div class="skill-label">
-                  <i class="pi pi-check-circle"></i> {{ skill.name }}
-                </div>
-                <div class="skill-bar-container" [title]="getSkillTooltip(skill.rating)">
-                  <div class="skill-bar" [style.width.%]="getSkillPercentage(skill.rating)"
-                    [ngClass]="getSkillLevelClass(skill.rating)"></div>
-                </div>
-              </li>
-            </ul>
+            <!-- Collapsible body: animated smoothly -->
+            <div class="skills-list-wrapper" [@collapseAnimation]="isCategoryOpen(i) ? 'open' : 'closed'">
+              <ul class="skills-list">
+                <li *ngFor="let skill of group.skills">
+                  <div class="skill-label">
+                    <i class="pi pi-check-circle"></i>
+                    <p-image [src]="skill.image" alt="Image" width="40" preview></p-image>
+                    {{ skill.name }}
+                  </div>
+                  <div class="skill-bar-container" [title]="getSkillTooltip(skill.rating)">
+                    <div class="skill-bar" [style.width.%]="getSkillPercentage(skill.rating)"
+                      [ngClass]="getSkillLevelClass(skill.rating)"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
         <!-- Extracurricular -->
         <div *ngSwitchCase="'Extracurricular'">
-          <div class="content-section" *ngFor="let activity of leaderships">
-            <h4>{{ activity.name }}</h4>
-            <div class="project-body" [innerHTML]="(activity.description ?? '') | safeHtml"></div>
+          <div #leadershipSection *ngFor="let activity of leaderships; let i = index"
+            class="content-section edu-section">
+            <div class="category-header" (click)="toggleLeadership(i)">
+              <h3>{{ activity.name }}</h3>
+              <span class="toggle-icon chevron" [class.rotated]="openLeadershipIndex === i">▼</span>
+            </div>
+
+            <div class="edu-details" [@collapseAnimation]="openLeadershipIndex === i ? 'open' : 'closed'">
+              <div class="project-body" [innerHTML]="(activity.description ?? '') | safeHtml"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Default -->
         <div *ngSwitchDefault>
-          <p>No content available.</p>
+          <p>Select a tab.</p>
         </div>
       </div>
     </div>
