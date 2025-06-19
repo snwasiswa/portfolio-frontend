@@ -1,9 +1,11 @@
+/* General Container */
 .page-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
+/* Scrolling Text */
 .scrolling-text {
   display: inline-block;
   padding-left: 100%;
@@ -15,8 +17,13 @@
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 /* Tabs Container */
@@ -78,12 +85,11 @@
   font-weight: 700;
 }
 
-/* Tab content dialog */
+/* Tab Content Panel */
 .tab-content-panel {
   margin-top: 2rem;
   padding: 2rem;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
-  //background: #1c1c1e;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
   color: #f0f0f0;
@@ -96,7 +102,6 @@
   padding: 1rem;
   border-left: 12px solid rgba(0, 123, 255, 0.4);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
-  //background: #232323;
   border-radius: 20px;
 }
 
@@ -113,7 +118,6 @@
 
 .project-tech-stack {
   margin-top: 1rem;
-
 }
 
 .tech-list {
@@ -168,6 +172,28 @@
   margin-bottom: 1.5rem;
 }
 
+.skills-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.skill-category {
+  transition: all 0.3s ease;
+}
+
+/* Default: Half width */
+.skill-category.half-width {
+  flex: 1 1 calc(50% - 1rem);
+  min-width: 300px;
+}
+
+/* Full width spans entire row */
+.skill-category.full-width {
+  flex: 1 1 100%;
+}
+
+
 .skill-label {
   font-weight: 600;
   color: #fff;
@@ -199,13 +225,27 @@
   transition: width 0.4s ease;
 }
 
-.skill-beginner { background-color: #e67e22; }
-.skill-intermediate { background-color: #3498db; }
-.skill-advanced { background-color: #2ecc71; }
+.skill-beginner {
+  background-color: #e67e22;
+}
+
+.skill-intermediate {
+  background-color: #3498db;
+}
+
+.skill-advanced {
+  background-color: #2ecc71;
+}
 
 @keyframes growBar {
-  from { width: 0; opacity: 0; }
-  to { opacity: 1; }
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* Floating Dialog */
@@ -246,50 +286,54 @@
 
 .dialog-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  /* Centering title horizontally */
   align-items: center;
   margin-bottom: 1.5rem;
-  transition: color 0.3s ease;
+  position: relative;
 }
-
-.floating-dialog:hover .dialog-header {
-  color: #00c8ff;
-}
-
 
 .dialog-header h3 {
   margin: 0;
   font-size: 1.5rem;
   color: #00c8ff;
+  text-align: center;
+  /* Centers the text */
+  padding-bottom: 10px;
+  /* Space between the text and the underline */
+  position: relative;
 }
 
+.dialog-header h3::after {
+  content: '';
+  position: absolute;
+  border-bottom: 2px dotted #00c8ff;
+  /* Dotted line */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* Length of the underline (can set a specific value like 80%) */
+  height: 2px;
+  box-shadow: 0 2px 5px rgba(0, 200, 255, 0.5);
+  /* Adds a shadow under the dotted line */
+}
+
+
+/* Close Button Positioning */
 .close-btn {
   background: none;
   border: none;
   font-size: 2rem;
   color: #fff;
   cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
   transition: color 0.3s ease;
 }
 
 .close-btn:hover {
   color: red;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 /* Media Queries */
@@ -301,18 +345,7 @@
 
   .tab-buttons button {
     width: 100%;
-    max-width: 100%;
-    height: auto;
-    aspect-ratio: unset;
     padding: 1.5rem;
-  }
-
-  .tab-icon {
-    font-size: 2rem;
-  }
-
-  .tab-label {
-    font-size: 1rem;
   }
 
   .floating-dialog {
@@ -336,4 +369,51 @@
   .tab-label {
     font-size: 0.95rem;
   }
+}
+
+.category-header {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to right, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.2));
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  transition: background 0.3s ease;
+  border-left: 5px solid #00c8ff;
+}
+
+.category-header:hover {
+  background: linear-gradient(to right, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.3));
+}
+
+.category-header h3 {
+  margin: 0;
+  color: #00c8ff;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.skill-category-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Each category container */
+.skill-category {
+  flex: 1 1 45%; // Two per row ideally, fallback to full width
+  min-width: 280px;
+}
+
+/* Full width version for certain categories */
+.skill-category.full-width {
+  flex: 1 1 100%;
+}
+
+
+.toggle-icon {
+  margin-left: 8px;
 }

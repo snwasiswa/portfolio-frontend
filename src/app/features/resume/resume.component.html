@@ -19,12 +19,12 @@
       </div>
 
       <div class="tab-content-panel" [ngSwitch]="activeTab">
-
         <!-- Education -->
         <div *ngSwitchCase="'Education'">
           <div class="content-section" *ngFor="let edu of educations">
             <h3>{{ edu.degree }} - {{ edu.school }}</h3>
             <p><strong>Year:</strong> {{ edu.year }}</p>
+            <small>Focus Area: {{ edu.focus_area }}</small>
           </div>
         </div>
 
@@ -56,25 +56,37 @@
         </div>
 
         <!-- Skills -->
-        <div *ngSwitchCase="'Skills'">
-          <ul class="skills-list">
-            <li *ngFor="let skill of skills">
-              <div class="skill-label">
-                <i class="pi pi-check-circle"></i> {{ skill.name }}
-              </div>
-              <div class="skill-bar-container" [title]="getSkillTooltip(skill.rating)">
-                <div class="skill-bar" [style.width.%]="getSkillPercentage(skill.rating)"
-                  [ngClass]="getSkillLevelClass(skill.rating)"></div>
-              </div>
-            </li>
-          </ul>
+        <div *ngSwitchCase="'Skills'" class="skills-wrapper">
+          <div *ngFor="let group of groupedSkills; let i = index" class="skill-category" [ngClass]="{
+                   'full-width': isFullWidthCategory(group.category),
+                   'half-width': !isFullWidthCategory(group.category)
+                    }">
+            <div class="category-header" (click)="toggleCategory(i)">
+              <h3>
+                {{ group.category }}
+                <i [ngClass]="isCategoryOpen(i) ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" class="toggle-icon"></i>
+              </h3>
+            </div>
+
+            <ul class="skills-list" *ngIf="isCategoryOpen(i)">
+              <li *ngFor="let skill of group.skills">
+                <div class="skill-label">
+                  <i class="pi pi-check-circle"></i> {{ skill.name }}
+                </div>
+                <div class="skill-bar-container" [title]="getSkillTooltip(skill.rating)">
+                  <div class="skill-bar" [style.width.%]="getSkillPercentage(skill.rating)"
+                    [ngClass]="getSkillLevelClass(skill.rating)"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- Extracurricular -->
         <div *ngSwitchCase="'Extracurricular'">
-          <div class="content-section" *ngFor="let activity of extracurricular">
-            <h4>{{ activity.title }}</h4>
-            <p>{{ activity.description }}</p>
+          <div class="content-section" *ngFor="let activity of leaderships">
+            <h4>{{ activity.name }}</h4>
+            <div class="project-body" [innerHTML]="(activity.description ?? '') | safeHtml"></div>
           </div>
         </div>
 

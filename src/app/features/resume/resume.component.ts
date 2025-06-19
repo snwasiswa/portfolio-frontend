@@ -24,8 +24,11 @@ export class ResumeComponent {
   educations: Education[] = [];
   experiences: Experience[] = [];
   skills: Skill[] = [];
+  groupedSkills: { category: string; skills: Skill[] }[] = [];
   projects: Project[] = [];
   leaderships: Leadership[] = [];
+
+  categoryState: { [key: number]: boolean } = {};
 
   extracurricular = [
     { title: 'Hackathon Winner', description: 'Won 1st place in regional hackathon.' },
@@ -40,7 +43,7 @@ export class ResumeComponent {
     { label: 'Extracurricular', icon: 'pi pi-users' }
   ];
 
-  constructor(private profileService: ProfileService) {}
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.profileService.getProfile().subscribe({
@@ -52,12 +55,47 @@ export class ResumeComponent {
           this.leaderships = this.profile.all_leaderships ?? [];
           this.projects = this.profile.all_projects ?? [];
           this.experiences = this.profile.all_experiences ?? [];
+
+          this.groupSkillsByCategory();
         } else {
           console.warn('No profile data found.');
         }
       },
       error: (err) => console.error('Error loading profile', err)
     });
+  }
+
+  // Choose which categories are full-width (can be dynamic)
+  isFullWidthCategory(category: string | undefined): boolean {
+    const fullWidthCategories = ['Soft Skills', 'Languages', 'Other']; // Customize as needed
+    return fullWidthCategories.includes(category ?? '');
+  }
+
+
+  private groupSkillsByCategory(): void {
+    const categoryMap: { [key: string]: Skill[] } = {};
+
+    for (const skill of this.skills) {
+      const category = skill.category || 'Uncategorized'; // fallback for undefined
+      if (!categoryMap[category]) {
+        categoryMap[category] = [];
+      }
+      categoryMap[category].push(skill);
+    }
+
+    this.groupedSkills = Object.entries(categoryMap).map(([category, skills]) => ({
+      category,
+      skills
+    }));
+  }
+
+
+  toggleCategory(index: number): void {
+    this.categoryState[index] = !this.categoryState[index];
+  }
+
+  isCategoryOpen(index: number): boolean {
+    return this.categoryState[index] ?? true; // Open by default
   }
 
   openTabDialog(tabLabel: string) {
