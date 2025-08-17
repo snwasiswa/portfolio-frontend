@@ -25,10 +25,40 @@
         </a>
       </ng-template>
 
-      <!-- Preferences & Hamburger pushed to right -->
+      <!-- Right Side -->
       <ng-template pTemplate="end">
-        <div class="preferences-wrapper custom-button">
+        <div class="preferences-wrapper custom-button" style="display: flex; align-items: center; gap: 1rem;">
+
+          <!-- PrimeNG Dropdown -->
+          <p-dropdown
+            [options]="roleOptions"
+            [(ngModel)]="selectedRole"
+            (onChange)="onSwitchRole($event)"
+            optionLabel="label"
+            styleClass="switch-role-dropdown"
+            [style]="{ width: '180px' }"
+          >
+            <!-- Selected -->
+            <ng-template let-option pTemplate="selectedItem">
+              <div class="dropdown-item">
+                <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
+                {{ option?.label }}
+              </div>
+            </ng-template>
+
+            <!-- Items -->
+            <ng-template let-option pTemplate="item">
+              <div class="dropdown-item">
+                <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
+                {{ option.label }}
+              </div>
+            </ng-template>
+          </p-dropdown>
+
+          <!-- Preferences -->
           <app-preferences></app-preferences>
+
+          <!-- Hamburger -->
           <div class="mobile-only hamburger-icon">
             <p-button
               icon="pi pi-bars"

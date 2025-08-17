@@ -1,26 +1,80 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
-import { MenuItem } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-import { CommonModule } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
 import { PreferencesComponent } from '../preferences/preferences.component';
+import { MenuItem } from 'primeng/api';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MenubarModule, ToolbarModule, ButtonModule, SidebarModule, PreferencesComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MenubarModule,
+    ToolbarModule,
+    ButtonModule,
+    SidebarModule,
+    DropdownModule,
+    PreferencesComponent
+  ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   menuItems: MenuItem[] = [];
-  activeSection: string = 'home'; // Initialize with the default section
+  activeSection: string = 'home';
   sidebarVisible = false;
 
+  role: string = 'guest-view';
+  selectedRole: any;
+
+  roleOptions = [
+    { label: 'Recruiter', value: 'recruiter-view', icon: 'pi pi-user-plus' },
+    { label: 'Developer', value: 'developer-view', icon: 'pi pi-code' },
+    { label: 'Guest', value: 'guest-view', icon: 'pi pi-user' },
+    { label: 'Random', value: 'random-view', icon: 'pi pi-globe' }
+  ];
+
+  constructor(private router: Router) {}
+
   ngOnInit() {
-    this.menuItems = [
+    this.detectRole();
+    this.selectedRole = this.roleOptions.find(r => r.value === this.role);
+    this.buildMenuForRole();
+
+    // Sync role after navigation
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.detectRole();
+        this.selectedRole = this.role;
+        this.buildMenuForRole();
+      });
+  }
+
+  private detectRole() {
+    const currentUrl = this.router.url;
+    const match = currentUrl.match(/\/([a-zA-Z\-]+)\b/);
+    this.role = match?.[1] || 'guest-view';
+    this.selectedRole = this.role;
+  }
+
+  onSwitchRole(event: any) {
+    const selectedRole = event.value?.value;
+    if (selectedRole && selectedRole !== this.role) {
+      this.router.navigate([`/${selectedRole}`]);
+    }
+  }
+
+  private buildMenuForRole() {
+    const allItems: MenuItem[] = [
       { separator: true },
       { label: 'Home', icon: 'pi pi-home', command: () => this.scrollTo('home') },
       { separator: true },
@@ -28,17 +82,42 @@ export class NavbarComponent {
       { separator: true },
       { label: 'Projects', icon: 'pi pi-briefcase', command: () => this.scrollTo('projects') },
       { separator: true },
-      { label: 'Resume', icon: 'pi pi-briefcase', command: () => this.scrollTo('resume') },
+      { label: 'Resume', icon: 'pi pi-file', command: () => this.scrollTo('resume') },
       { separator: true },
       { label: 'Contact', icon: 'pi pi-envelope', command: () => this.scrollTo('contact') },
-      { separator: true },
+      { separator: true }
     ];
+
+    switch (this.role) {
+      case 'recruiter-view':
+        this.menuItems = allItems;
+        break;
+      case 'developer-view':
+        this.menuItems = allItems.filter(item =>
+          ['Home', 'About', 'Projects', 'Resume'].includes(item.label || '')
+        );
+        break;
+      case 'guest-view':
+        this.menuItems = allItems.filter(item =>
+          ['Home', 'About'].includes(item.label || '')
+        );
+        break;
+      case 'random-view':
+        this.menuItems = allItems.filter(item =>
+          ['Projects'].includes(item.label || '')
+        );
+        break;
+      default:
+        this.menuItems = allItems.filter(item =>
+          ['Home'].includes(item.label || '')
+        );
+    }
   }
 
   scrollTo(id: string) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
-    this.sidebarVisible = false; // Close the sidebar after selection (for mobile)
+    this.sidebarVisible = false;
   }
 
   @HostListener('window:scroll', [])
@@ -55,13 +134,15 @@ export class NavbarComponent {
       }
     }
 
-    // Add 'scrolled' class to both navbar and sidebar when scrolled
+    const header = document.querySelector('.sticky-header');
+    const sidebar = document.querySelector('.p-sidebar');
+
     if (window.scrollY > 50) {
-      document.querySelector('.sticky-header')?.classList.add('scrolled');
-      document.querySelector('.p-sidebar')?.classList.add('scrolled');
+      header?.classList.add('scrolled');
+      sidebar?.classList.add('scrolled');
     } else {
-      document.querySelector('.sticky-header')?.classList.remove('scrolled');
-      document.querySelector('.p-sidebar')?.classList.remove('scrolled');
+      header?.classList.remove('scrolled');
+      sidebar?.classList.remove('scrolled');
     }
   }
 }
