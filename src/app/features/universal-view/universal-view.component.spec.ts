@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecruiterViewComponent } from './recruiter-view.component';
+import { UniversalViewComponent } from './universal-view.component';
 
-describe('RecruiterViewComponent', () => {
-  let component: RecruiterViewComponent;
-  let fixture: ComponentFixture<RecruiterViewComponent>;
+describe('UniversalViewComponent', () => {
+  let component: UniversalViewComponent;
+  let fixture: ComponentFixture<UniversalViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecruiterViewComponent]
+      imports: [UniversalViewComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RecruiterViewComponent);
+    fixture = TestBed.createComponent(UniversalViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

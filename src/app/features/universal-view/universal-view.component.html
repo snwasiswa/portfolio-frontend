@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+
+<div class="page-wrapper">
+  <div class="page-content">
+    <main>
+      <ng-container *ngFor="let section of sectionConfig">
+        <app-section-wrapper *ngIf="section.visible" [animation]="section.animation">
+          <section [id]="section.id" class="section">
+            <ng-container [ngSwitch]="section.component">
+              <app-home *ngSwitchCase="'home'"></app-home>
+              <app-about *ngSwitchCase="'about'"></app-about>
+              <app-projects *ngSwitchCase="'projects'"></app-projects>
+              <app-resume *ngSwitchCase="'resume'"></app-resume>
+              <app-contact *ngSwitchCase="'contact'"></app-contact>
+            </ng-container>
+          </section>
+        </app-section-wrapper>
+      </ng-container>
+    </main>
+  </div>
+  <app-footer></app-footer>
+</div>

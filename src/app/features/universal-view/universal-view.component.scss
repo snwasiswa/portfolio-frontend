@@ -1,0 +1,35 @@
+/* Base styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Wrapper to ensure footer sticks to bottom */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content flex-grow */
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Section styling: full viewport height and padding */
+section {
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Optional: For the section-wrapper div to fill the height */
+app-section-wrapper > div {
+  display: block; /* ensures ng-content container behaves as block */
+  height: 100%;
+}
