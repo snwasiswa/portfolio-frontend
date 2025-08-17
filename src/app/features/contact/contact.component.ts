@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 import {
   FormBuilder,
   FormGroup,
@@ -35,9 +36,10 @@ import { CommonModule } from '@angular/common';
     // PrimeNG components
     InputText,
     InputTextarea,
+    ButtonModule,
     Button,
     Toast,
-    Message // ✅ Added this to enable p-message
+    Message // Added this to enable p-message
   ],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
@@ -59,7 +61,11 @@ export class ContactComponent {
         nonNullable: true,
         validators: [Validators.required, Validators.email]
       }),
-      phone: new FormControl<string | null>(null),
+      phone: new FormControl<string | null>(null, [
+  Validators.required,
+  Validators.pattern(/^\+?\d{10,15}$/)
+]),
+
       subject: new FormControl<string | null>(null),
       message: new FormControl('', {
         nonNullable: true,
