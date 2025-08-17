@@ -130,7 +130,7 @@
 }
 
 .tech-list li {
-  background-color: #e0e0e0;
+  background-color: #0b9143;
   padding: 0.3rem 0.6rem;
   border-radius: 4px;
   font-size: 0.85rem;
@@ -144,22 +144,67 @@
   align-items: center;
   gap: 1rem;
   width: 100%;
+  flex-wrap: wrap;
+  cursor: pointer;
 }
 
 .job-title {
+  flex: 2;
   font-weight: 600;
-  flex: 1;
   color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.company-info {
+  flex: 1;
+  min-width: 150px;
+  text-align: right;
 }
 
 .company-name {
   color: #aaa;
   font-style: italic;
-  text-align: right;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
-  max-width: 50%;
+  text-overflow: ellipsis;
+}
+
+.location {
+  font-size: 0.85em;
+  color: #888;
+}
+
+.toggle-icon {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 600px) {
+  .exp-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .job-title,
+  .company-info,
+  .toggle-icon {
+    width: 100%;
+    text-align: left;
+  }
+
+  .company-info {
+    text-align: left;
+    margin-top: 0.3rem;
+  }
+
+  .toggle-icon {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
 }
 
 /* Skills */
@@ -441,5 +486,101 @@
   padding: 0 1rem;
   border-radius: 0 0 12px 12px;
   color: #eee;
+}
+
+.password-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+}
+
+.password-dialog {
+  background: linear-gradient(160deg, rgba(0, 0, 0, 0.6), rgba(0, 123, 255, 0.3));
+  border-radius: 20px;
+  padding: 2rem;
+  width: 550px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 200, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideUp 0.3s ease;
+}
+
+.password-dialog:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 40px rgba(0, 200, 255, 0.5);
+}
+
+.password-dialog .dialog-header {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #00c8ff;
+}
+
+.password-dialog .dialog-body {
+  margin-bottom: 1.5rem;
+}
+
+
+.password-dialog input {
+  width: 85%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  margin-bottom: 1.2rem;
+  transition: border 0.3s ease, background 0.3s ease;
+}
+
+.password-dialog input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.password-dialog input:focus {
+  border-color: #00c8ff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.password-dialog button {
+  background: linear-gradient(to right, #00c8ff, #007bff);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.password-dialog button:hover {
+  background: linear-gradient(to right, #007bff, #0056b3);
+  transform: translateY(-2px);
+}
+
+.close-btn {
+  position: absolute;
+  top: -20px; /* push it above the dialog */
+  right: -20px; /* push it further to the right */
+  background: linear-gradient(to right, #ff4d4d, #ff0000);
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.close-btn:hover {
+  background: linear-gradient(to right, #ff1a1a, #cc0000);
+  transform: scale(1.1);
 }
 

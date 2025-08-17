@@ -8,8 +8,9 @@ export interface Portfolio {
   body?: string;
   date?: string;
   is_side_project?: boolean;
+  for_resume?: boolean;
   url?: string;
   year?: string;
-  technology?: string;
+  technology?: string[];
   get_logo_url: string;
 }

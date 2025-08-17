@@ -10,6 +10,6 @@ export interface Project {
   is_side_project?: boolean;
   url?: string;
   year?: string;
-  technology?: string;
+  technology?: string[];
   get_logo_url: string;
 }

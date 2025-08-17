@@ -5,6 +5,8 @@ import {
   ViewChildren
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
 import { ImageModule } from 'primeng/image';
 import { ProfileService } from '../../core/services/profile/profile.service';
 import { Profile } from '../../core/models/profile/profile.model';
@@ -25,7 +27,7 @@ import {
 @Component({
   selector: 'app-resume',
   standalone: true,
-  imports: [CommonModule, SafeHtmlPipe, ImageModule],
+  imports: [CommonModule, ButtonModule, SafeHtmlPipe, ImageModule, FormsModule],
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.scss'],
   animations: [
@@ -55,6 +57,9 @@ import {
 export class ResumeComponent {
   activeTab = '';
   isDialogVisible = false;
+  isPasswordDialogVisible = false;
+  password: string = '';
+  correctPassword: string = '';
 
   profile!: Profile;
   educations: Education[] = [];
@@ -76,13 +81,7 @@ export class ResumeComponent {
   openLeadershipIndex: number | null = null;
   openSkillCategoryIndex: number | null = null;
 
-  tabs = [
-    { label: 'Education', icon: 'pi pi-book' },
-    { label: 'Experience', icon: 'pi pi-briefcase' },
-    { label: 'Projects', icon: 'pi pi-folder' },
-    { label: 'Skills', icon: 'pi pi-star' },
-    { label: 'Extracurricular', icon: 'pi pi-users' }
-  ];
+  tabs: { label: string; icon: string }[] = [];
 
   constructor(private profileService: ProfileService) { }
 
@@ -98,12 +97,25 @@ export class ResumeComponent {
           this.experiences = this.profile.all_experiences ?? [];
 
           this.groupSkillsByCategory();
+
+          // Build tabs dynamically
+          this.tabs = [
+            { label: 'Education', icon: 'pi pi-book' },
+            ...(this.hasActiveExperiences ? [{ label: 'Experience', icon: 'pi pi-briefcase' }] : []),
+            { label: 'Projects', icon: 'pi pi-folder' },
+            { label: 'Skills', icon: 'pi pi-star' },
+            { label: 'Extracurricular', icon: 'pi pi-users' }
+          ];
         } else {
           console.warn('No profile data found.');
         }
       },
       error: (err) => console.error('Error loading profile', err)
     });
+  }
+
+  get hasActiveExperiences(): boolean {
+    return this.experiences?.some(exp => exp.active) ?? false;
   }
 
   isFullWidthCategory(category: string | undefined): boolean {
@@ -199,7 +211,6 @@ export class ResumeComponent {
     this.activeTab = tabLabel;
     this.isDialogVisible = true;
 
-    // Reset open indexes on new tab open
     this.openEducationIndex = null;
     this.openExperienceIndex = null;
     this.openProjectIndex = null;
@@ -244,5 +255,31 @@ export class ResumeComponent {
       category,
       skills
     }));
+  }
+
+  openPasswordDialog(): void {
+    this.isPasswordDialogVisible = true;
+  }
+
+  closePasswordDialog(): void {
+    this.isPasswordDialogVisible = false;
+  }
+
+  validatePassword(): void {
+    this.profileService.downloadResumeWithPassword(this.password).subscribe({
+      next: (blob) => {
+        this.isPasswordDialogVisible = false;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'My_Resume.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        alert('Incorrect password or resume download failed.');
+        console.error('Download error:', err);
+      }
+    });
   }
 }

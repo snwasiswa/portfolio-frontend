@@ -9,10 +9,19 @@ import { Observable } from 'rxjs';
 export class ProfileService {
 
   private apiUrl = 'http://127.0.0.1:8000/api/profiles/';
+  private readonly resumeUrl = 'http://localhost:8000/api/download-resume/';
 
   constructor(private http: HttpClient) {}
 
   getProfile(): Observable<Profile> {
     return this.http.get<Profile>(this.apiUrl);
   }
+
+  downloadResumeWithPassword(password: string): Observable<Blob> {
+  return this.http.post(this.resumeUrl,
+    { password },
+    { responseType: 'blob' }
+  );
 }
+}
+
