@@ -15,8 +15,8 @@
           <div class="project-info">
             <h4>{{ project.name }}</h4>
             <p>{{ project.description }}</p>
-            <p-button label="Click for code or demo" icon="pi pi-arrow-right" (onClick)="openLink(project.url)"
-              class="custom-button mt-3">
+            <p-button *ngIf="project.url?.trim()" label="Click for code or demo" icon="pi pi-arrow-right"
+                      (onClick)="openLink(project.url)" class="custom-button mt-3">
             </p-button>
           </div>
           <div class="project-tech-stack">
@@ -49,8 +49,8 @@
           <div class="project-info">
             <h4>{{ project.name }}</h4>
             <p>{{ project.description }}</p>
-            <p-button label="Click for code or demo" icon="pi pi-arrow-right" (onClick)="openLink(project.url)"
-              class="custom-button mt-3">
+            <p-button *ngIf="project.url?.trim()" label="Click for code or demo" icon="pi pi-arrow-right"
+                      (onClick)="openLink(project.url)" class="custom-button mt-3">
             </p-button>
           </div>
           <div class="project-tech-stack">
