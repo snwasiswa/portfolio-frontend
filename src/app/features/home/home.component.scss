@@ -25,10 +25,10 @@
   width: 100%;
 }
 
+/* Welcome Section */
 .welcome-section {
   flex: 1;
-  margin-right: 2rem; /* Space between welcome text and profile image */
-  align-items: center;
+  margin-left: 2rem; /* Space between profile-info and welcome text */
   text-align: center;
 }
 
@@ -127,23 +127,42 @@
   z-index: 2; /* Keep text and links above gradient */
 }
 
-/* Responsive Design for Hero Section */
+/* Responsive Design for Hero Section and Profile/Welcome Section */
 @media (max-width: 768px) {
   .hero-section {
     flex-direction: column;
     justify-content: center;
   }
 
-  .profile-section, .welcome-section {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    margin-bottom: 2rem;
+  .profile-section {
+    flex-direction: column; /* Stack vertically */
   }
 
+  /* Welcome section comes first on mobile */
+  .welcome-section {
+    order: 1;
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Profile info comes second on mobile */
+  .profile-info {
+    order: 2;
+    width: 100%;
+  }
+
+  /* Smaller avatar on mobile */
   .profile-info .avatar-img {
     width: 150px;
     height: 150px;
+  }
+
+  /* Remove padding left/right on profile and welcome sections */
+  .profile-section, .welcome-section {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 2rem;
   }
 
   .hero-section .bg-dark {
@@ -204,7 +223,7 @@ p-card {
   z-index: 2; /* Ensure content is above the gradient */
 }
 
-
+/* Custom button styles */
 ::ng-deep .custom-button .p-button {
   background-color: #0b3d91; /* Dark Blue */
   border: none;
@@ -224,19 +243,22 @@ p-card {
   outline: none;
 }
 
-.welcome-container {
-  overflow: hidden;
-  width: 100%;
-  white-space: nowrap;
-  position: relative;
+/* Welcome container and scrolling text */
+.welcome-section {
+  flex: 1;
+  margin-left: 2rem;
+  text-align: center;
+  overflow: hidden; /* clip overflow */
+  position: relative; /* needed for clipping */
 }
 
 .scrolling-text {
   display: inline-block;
-  padding-left: 80%;
+  padding-left: 100%; /* Start fully outside on right */
   animation: marquee 10s linear infinite;
   font-size: 2rem;
   white-space: nowrap;
+  will-change: transform;
 }
 
 @keyframes marquee {

@@ -8,18 +8,14 @@ import {
   Validators
 } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { ContactService } from '../../core/services/contact/contact.service';
 import { MessageService } from 'primeng/api';
-
 // PrimeNG components for standalone usage
 import { InputText } from 'primeng/inputtext';
 import { InputTextarea } from 'primeng/inputtextarea';
 import { Button } from 'primeng/button';
 import { Toast } from 'primeng/toast';
-import { Message } from 'primeng/message'; // ✅ Added this import
-
-// Your strongly typed form model
+import { Message } from 'primeng/message';
 import { ContactFormModel } from '../../core/models/contact/contact.model';
 import { CommonModule } from '@angular/common';
 

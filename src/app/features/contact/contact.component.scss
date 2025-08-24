@@ -16,6 +16,16 @@
   white-space: nowrap;
 }
 
+.contact-summary {
+  font-weight: normal;
+  font-size: 1.25rem;
+  color: #ddd;
+  margin: 1rem auto 2rem;
+  max-width: 800px;
+  text-align: center;
+  line-height: 1.6;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);

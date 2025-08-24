@@ -264,11 +264,90 @@ p-message {
   white-space: nowrap;
 }
 
+.project-tech-stack {
+  margin-top: 1rem;
+  padding-left: 2rem;
+}
+
+.tech-list {
+  list-style: none;
+  padding-left: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-list li {
+  background-color: #0b9143;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #000;
+}
+
+.project-summary {
+  font-weight: normal;
+  font-size: 1.25rem;
+  color: #ddd;
+  margin: 1rem auto 2rem;
+  max-width: 800px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Custom button styles */
+::ng-deep .custom-button .p-button {
+  background-color: #0b3d91; /* Dark Blue */
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(11, 61, 145, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+::ng-deep .custom-button .p-button:hover {
+  background-color: #092f6b; /* Slightly darker blue */
+  box-shadow: 0 6px 16px rgba(11, 61, 145, 0.6);
+  transform: translateY(-2px);
+}
+
+::ng-deep .custom-button .p-button:focus {
+  box-shadow: 0 0 0 0.2rem rgba(11, 61, 145, 0.5);
+  outline: none;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+
+
+/* On smaller screens, stack project cards vertically and disable horizontal scroll */
+@media (max-width: 768px) {
+  .scroll-container {
+    flex-direction: column; /* Stack items vertically */
+    overflow-x: visible !important; /* Remove horizontal scrolling */
+    max-width: 100%;
+    gap: 1.5rem; /* Space between cards vertically */
+    scrollbar-width: none; /* Hide scrollbar */
+  }
+
+  /* Hide scrollbar for WebKit browsers */
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Each project card takes full width on mobile */
+  .project-card {
+    width: 100%; /* Full container width */
+    flex: none; /* Disable flex shrinking/growing */
+  }
+
+  /* Hide arrow buttons on mobile */
+  .arrow-btn {
+    display: none;
   }
 }

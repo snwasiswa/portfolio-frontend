@@ -121,6 +121,16 @@
   height: 50%;
 }
 
+.intro-summary {
+  font-weight: normal;
+  font-size: 1.25rem;
+  color: #ddd;
+  margin: 1rem auto 2rem;
+  max-width: 800px;
+  text-align: center;
+  line-height: 1.6;
+}
+
 
 /* Styling for the Profile and Welcome Section background */
 .bg-dark {
@@ -178,6 +188,22 @@
     justify-content: center;
   }
 
+  .profile-section {
+    flex-direction: column; /* Stack children vertically */
+  }
+
+  .profile-info {
+    order: 1;       /* Profile info first */
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .welcome-section {
+    order: 2;       /* Welcome section below profile info */
+    width: 100%;
+    margin-right: 0; /* Remove right margin on mobile */
+  }
+
   .profile-section, .welcome-section {
     width: 100%;
     padding-left: 0;
@@ -216,6 +242,17 @@ p-card {
   position: relative;
 }
 
+.inline-link {
+  color: #00bcd4;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.inline-link:hover {
+  color: #007bff;
+}
+
+
 /* Add gradient overlay for hover effect */
 .custom-gradient-card ::ng-deep .p-card::before {
   content: '';
@@ -248,7 +285,6 @@ p-card {
   z-index: 2; /* Ensure content is above the gradient */
 }
 
-
 ::ng-deep .custom-button .p-button {
   background-color: #0b3d91; /* Dark Blue */
   border: none;
@@ -267,7 +303,6 @@ p-card {
   box-shadow: 0 0 0 0.2rem rgba(11, 61, 145, 0.5);
   outline: none;
 }
-
 
 .about-me {
   padding: 4rem 1.5rem;
@@ -309,4 +344,3 @@ p-card {
 .social-links a:hover {
   color: #0056b3;
 }
-

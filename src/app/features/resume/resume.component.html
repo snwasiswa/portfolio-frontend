@@ -1,10 +1,16 @@
 <div class="page-container">
   <h2 class="scrolling-text">Resume</h2>
+  <h3 class="resume-summary">
+    Explore a detailed overview of my academic background, professional experience, technical skills, and personal
+    projects.
+    This resume showcases my journey as a developer, highlighting key milestones, capabilities, and the tools I've
+    mastered along the way.
+  </h3>
+
   <!-- Button to open the password dialog -->
   <p-button type="button" icon="pi pi-download" label="Download Resume" styleClass="p-button-info"
     (onClick)="openPasswordDialog()">
   </p-button>
-
   <!-- Password Dialog -->
   <div *ngIf="isPasswordDialogVisible" class="password-dialog-overlay" (click)="closePasswordDialog()">
     <div class="password-dialog" (click)="$event.stopPropagation()">
@@ -53,32 +59,32 @@
           </div>
         </div>
 
-  <!-- Experience -->
-<div *ngSwitchCase="'Experience'">
-  <div #experienceSection class="content-section edu-section" *ngFor="let exp of experiences; let i = index">
+        <!-- Experience -->
+        <div *ngSwitchCase="'Experience'">
+          <div #experienceSection class="content-section edu-section" *ngFor="let exp of experiences; let i = index">
 
-    <!-- Header: title left, company/location right -->
-    <div class="exp-header" (click)="toggleExperience(i)">
-      <div class="job-title">{{ exp.job_title }}</div>
+            <!-- Header: title left, company/location right -->
+            <div class="exp-header" (click)="toggleExperience(i)">
+              <div class="job-title">{{ exp.job_title }}</div>
 
-      <div class="company-info">
-        <div class="company-name">{{ exp.company_name }}</div>
-        <div class="location" *ngIf="exp.location">{{ exp.location }}</div>
-      </div>
+              <div class="company-info">
+                <div class="company-name">{{ exp.company_name }}</div>
+                <div class="location" *ngIf="exp.location">{{ exp.location }}</div>
+              </div>
 
-      <span class="toggle-icon chevron" [class.rotated]="openExperienceIndex === i">▼</span>
-    </div>
+              <span class="toggle-icon chevron" [class.rotated]="openExperienceIndex === i">▼</span>
+            </div>
 
-    <!-- Details -->
-    <div class="edu-details" [@collapseAnimation]="openExperienceIndex === i ? 'open' : 'closed'">
-      <p>
-        <strong>Period:</strong>
-        {{ exp.start_date }} - {{ exp.is_current ? 'Present' : exp.end_date }}
-      </p>
-      <div class="project-body" [innerHTML]="(exp.description ?? '') | safeHtml"></div>
-    </div>
-  </div>
-</div>
+            <!-- Details -->
+            <div class="edu-details" [@collapseAnimation]="openExperienceIndex === i ? 'open' : 'closed'">
+              <p>
+                <strong>Period:</strong>
+                {{ exp.start_date }} - {{ exp.is_current ? 'Present' : exp.end_date }}
+              </p>
+              <div class="project-body" [innerHTML]="(exp.description ?? '') | safeHtml"></div>
+            </div>
+          </div>
+        </div>
         <!-- Projects -->
         <div *ngSwitchCase="'Projects'">
           <div #projectSection class="content-section edu-section" *ngFor="let proj of projects; let i = index">

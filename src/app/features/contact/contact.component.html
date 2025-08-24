@@ -1,6 +1,10 @@
 <div class="page-container">
 
-          <h2 class="scrolling-text">Contact</h2>
+  <h2 class="scrolling-text">Contact</h2>
+  <h3 class="contact-summary">
+    Have a question, collaboration idea, or opportunity to discuss? Feel free to reach out—I'm always open to connecting
+    with fellow engineers, developers, teams, or anyone interested in working together.
+  </h3>
 
   <div class="contact-form-container">
     <h2>Get in touch!</h2>
@@ -17,7 +21,8 @@
       <div class="p-field">
         <label for="email">Email</label>
         <input id="email" type="email" pInputText formControlName="email" />
-        <p-message *ngIf="f.email.touched && f.email.invalid" severity="error" text="Valid email is required"></p-message>
+        <p-message *ngIf="f.email.touched && f.email.invalid" severity="error"
+          text="Valid email is required"></p-message>
       </div>
 
       <!-- Phone Field -->
@@ -36,11 +41,13 @@
       <div class="p-field">
         <label for="message">Message</label>
         <textarea id="message" pInputTextarea rows="5" formControlName="message"></textarea>
-        <p-message *ngIf="f.message.touched && f.message.invalid" severity="error" text="Message is required"></p-message>
+        <p-message *ngIf="f.message.touched && f.message.invalid" severity="error"
+          text="Message is required"></p-message>
       </div>
 
       <!-- Submit Button -->
-      <button pButton  icon="pi pi-send" type="submit" label="Submit" class="p-button-success" [disabled]="contactForm.invalid"></button>
+      <button pButton icon="pi pi-send" type="submit" label="Submit" class="p-button-success"
+        [disabled]="contactForm.invalid"></button>
 
     </form>
   </div>

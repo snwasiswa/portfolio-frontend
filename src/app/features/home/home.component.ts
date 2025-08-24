@@ -1,75 +1,126 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { CommonModule } from '@angular/common';
+
 import { ProfileService } from '../../core/services/profile/profile.service';
 import { Profile } from '../../core/models/profile/profile.model';
 
+interface Section {
+  id: string;
+  title: string;
+  description: string;
+  link: string;
+  buttonText: string;
+  visible: boolean;
+}
+
 @Component({
   selector: 'app-home',
-  imports: [CardModule, ButtonModule, RouterModule, CommonModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule, ButtonModule, CardModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss']
 })
-
 export class HomeComponent implements OnInit {
-
-  currentYear = new Date().getFullYear();
-  profile!: Profile; // holds the fetched profile
-
+  profile!: Profile;
   welcomeMessage = 'Welcome!';
   welcomeMessageChars: string[] = [];
 
-  sections = [
-    {
-      title: 'About Me',
-      description: 'Learn more about my journey, passions, and what drives me to code and create meaningful software.',
-      link: '/about',
-      buttonText: 'Read More'
-    },
-    {
-      title: 'Skills',
-      description: 'Explore the tools, languages, and frameworks I use — from Python and Django to frontend technologies.',
-      link: '/skills',
-      buttonText: 'View Skills'
-    },
-    {
-      title: 'Projects',
-      description: 'See real-world projects I’ve built, including web apps, APIs, and personal experiments.',
-      link: '/projects',
-      buttonText: 'View Projects'
-    },
-    {
-      title: 'Resume',
-      description: 'Download or view my resume to get a quick overview of my education, experience, and skills.',
-      link: '/resume',
-      buttonText: 'View Resume'
-    },
-    {
-      title: 'Contact',
-      description: 'Have an opportunity, feedback, or just want to say hi? Let’s connect!',
-      link: '/contact',
-      buttonText: 'Get in Touch'
-    }
-  ];
+  role: string = 'guest-view';
+  sections: Section[] = [];
 
-  constructor(private profileService: ProfileService) {}
+  constructor(
+    private profileService: ProfileService,
+    private route: ActivatedRoute
+  ) {}
 
-ngOnInit(): void {
+  ngOnInit(): void {
+    this.welcomeMessageChars = this.welcomeMessage.split('');
 
-  this.welcomeMessageChars = this.welcomeMessage.split('');
+    // Determine role from path
+    this.route.pathFromRoot.forEach(route =>
+      route.url.subscribe(segments => {
+        const firstSegment = segments[0]?.path.toLowerCase();
+        if (firstSegment?.includes('recruiter')) this.role = 'recruiter-view';
+        else if (firstSegment?.includes('developer')) this.role = 'developer-view';
+        else if (firstSegment?.includes('random')) this.role = 'random-view';
+        else this.role = 'guest-view';
+      })
+    );
 
-  this.profileService.getProfile().subscribe({
-    next: (data) => {
-      if (Array.isArray(data) && data.length > 0) {
-        this.profile = data[0];  // Access the first profile in the list
-      } else {
-        console.warn('No profile data found.');
+    this.setupSections();
+
+    this.profileService.getProfile().subscribe({
+      next: (data) => {
+        if (Array.isArray(data) && data.length > 0) this.profile = data[0];
+      },
+      error: (err) => console.error('Error loading profile', err)
+    });
+  }
+
+  setupSections(): void {
+    const allSections: Section[] = [
+      {
+        id: 'about',
+        title: 'About Me',
+        description: 'Learn more about my journey, passions, and what drives me to code and create meaningful software.',
+        link: 'about',
+        buttonText: 'Read More',
+        visible: true
+      },
+      {
+        id: 'projects',
+        title: 'Projects',
+        description: 'See real-world projects I’ve built, including web apps, APIs, and personal experiments.',
+        link: 'projects',
+        buttonText: 'View Projects',
+        visible: true
+      },
+      {
+        id: 'resume',
+        title: 'Resume',
+        description: 'Explore the tools and technologies I use — from Python and Django to frontend frameworks ' +
+          '— and view my resume for a quick overview of my education, experience, and skills.',
+        link: 'resume',
+        buttonText: 'View Resume',
+        visible: true
+      },
+      {
+        id: 'contact',
+        title: 'Contact',
+        description: 'Have an opportunity, feedback, or just want to say hi? Let’s connect!',
+        link: 'contact',
+        buttonText: 'Get in Touch',
+        visible: true
       }
-    },
-    error: (err) => console.error('Error loading profile', err)
-  });
-}
+    ];
 
+    switch (this.role) {
+      case 'recruiter-view':
+        this.sections = allSections;
+        break;
+      case 'developer-view':
+        this.sections = allSections.map(s => ({ ...s, visible: s.id !== 'contact' }));
+        break;
+      case 'guest-view':
+        this.sections = allSections.map(s => ({ ...s, visible: s.id === 'about' }));
+        break;
+      case 'random-view':
+        this.sections = allSections.map(s => ({ ...s, visible: s.id === 'projects' }));
+        break;
+      default:
+        this.sections = allSections.map(s => ({ ...s, visible: s.id === 'about' }));
+    }
+
+    this.sections = this.sections.filter(s => s.visible);
+  }
+
+  scrollToSection(id: string): void {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }

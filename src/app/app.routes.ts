@@ -4,29 +4,22 @@ import { LogoComponent } from './features/logo/logo.component';
 import { WhoscheckingComponent } from './features/whoschecking/whoschecking.component';
 import { UniversalViewComponent } from './features/universal-view/universal-view.component';
 
-import { HomeComponent } from './features/home/home.component';
-import { AboutComponent } from './features/about/about.component';
-import { ProjectsComponent } from './features/projects/projects.component';
-import { ResumeComponent } from './features/resume/resume.component';
-import { ContactComponent } from './features/contact/contact.component';
-
 export const routes: Routes = [
   { path: '', component: LogoComponent },
   { path: 'who', component: WhoscheckingComponent },
 
-  // Universal dynamic view routes
+  // Recruiter View - one page
   { path: 'recruiter-view', component: UniversalViewComponent },
+
+  // Developer View - one page
   { path: 'developer-view', component: UniversalViewComponent },
+
+  // Guest View - one page
   { path: 'guest-view', component: UniversalViewComponent },
+
+  // Random View - one page
   { path: 'random-view', component: UniversalViewComponent },
 
-  // Individual routes (if needed elsewhere)
-  { path: 'home', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'resume', component: ResumeComponent },
-  { path: 'contact', component: ContactComponent },
-
-  // Catch-all fallback
+  // Fallback route
   { path: '**', redirectTo: '' }
 ];

@@ -1,36 +1,45 @@
 <div class="page-container">
-   <div class="welcome-container">
-          <h2 class="scrolling-text">At glance</h2>
-        </div>
-  <!-- Hero Section with Avatar, Name, Title and Welcome Section -->
-  <!--<section class="hero-section text-white d-flex align-items-center justify-content-between">-->
+  <!-- Scrolling text heading -->
+  <div class="welcome-container">
+    <h2 class="scrolling-text">At glance</h2>
+  </div>
+  <h3 class="intro-summary">This section offers a concise introduction to who I am, showcasing my background, skills,
+    and passions. You’ll
+    find a brief biography along with important links to connect with me. Whether you want to collaborate, hire, or just
+    have a tech conversation, this is your go-to spot to learn more and get in touch.</h3>
+  <!-- Profile & Welcome Section -->
   <div class="profile-section bg-dark bg-opacity-75 p-4 rounded" *ngIf="profile">
-    <!-- Avatar, Name, Title -->
+    <!-- Left: Profile Info -->
     <div class="profile-info">
       <h2>About me</h2>
       <div *ngIf="profile?.biography" [innerHTML]="profile.biography! | safeHtml"></div>
     </div>
-    <!-- Welcome Section inside Profile Section (right of the avatar) -->
+
+    <!-- Right (or bottom on mobile): Welcome Section -->
     <div class="welcome-section">
       <h3>Where to Find Me</h3>
-      <li class="social-links" *ngIf="profile_contacts?.length">
+      <ul class="social-links" *ngIf="profile_contacts?.length">
         <ng-container *ngFor="let link of profile_contacts">
           <li *ngIf="link.category === 'Link' && link.name" class="link-item">
             <a [href]="link.url" target="_blank" class="link-content">
-              <!--<em class="fa fa-{{ link.name.toLowerCase() }}" style="color: steelblue; font-size: 30px;">
-                {{ link.name }}
-              </em>-->
               <p-image [src]="link.icon" alt="Image" width="30" preview></p-image>
               <span class="link-name">{{ link.name }}</span>
             </a>
           </li>
         </ng-container>
-      </li>
+      </ul>
+
       <h3>What's Next!</h3>
       <p class="lead">
-        If you’re interested in collaborating, hiring, or just chatting tech, feel free to <a href="/contact">
-          get in touch</a> or connect with me on one of the platforms above.
+        If you’re interested in collaborating, hiring, or just chatting tech, feel free to
+        <a href="#" (click)="scrollToSection('contact', $event)" class="inline-link">
+          get in touch
+        </a>
+        or connect with me on one of the platforms above.
       </p>
+      <p-button label="Learn More" icon="pi pi-arrow-right" (onClick)="scrollToSection('about')"
+        class="custom-button mt-3">
+      </p-button>
     </div>
   </div>
 </div>

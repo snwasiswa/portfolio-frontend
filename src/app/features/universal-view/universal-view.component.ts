@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
+import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
@@ -26,6 +26,7 @@ interface SectionConfig {
   imports: [
     CommonModule,
     NavbarComponent,
+    RouterModule,
     HomeComponent,
     AboutComponent,
     ProjectsComponent,
@@ -78,7 +79,7 @@ export class UniversalViewComponent implements OnInit {
         this.sectionConfig = allSections.map(section => ({
           ...section,
           visible: ['home', 'about'].includes(section.id),
-          animation: section.id === 'home' ? 'zoomIn' : 'rotateIn'  // simpler animations
+          animation: section.id === 'home' ? 'rotateIn' : section.animation // simpler animations
         }));
         break;
 

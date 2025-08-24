@@ -2,11 +2,12 @@ import { Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/co
 import { CommonModule } from '@angular/common';
 import { ProjectsService } from '../../core/services/projects/projects.service';
 import { Project } from '../../core/models/projects/project.model';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Button],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
@@ -39,6 +40,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       this.academicProjects = projects.filter(p => !p.is_side_project);
       this.sideProjects = projects.filter(p => p.is_side_project);
     });
+  }
+
+  openLink(url?: string): void {
+    if (url) {
+      window.open(url, '_blank');
+    }
   }
 
   scroll(container: ElementRef<HTMLDivElement>, amount: number, type: 'academic' | 'side'): void {

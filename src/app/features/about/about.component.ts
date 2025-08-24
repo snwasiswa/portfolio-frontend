@@ -17,25 +17,36 @@ import { ImageModule } from 'primeng/image';
 })
 export class AboutComponent {
 
-profile!: Profile; // holds the fetched profile
-constructor(private profileService: ProfileService) {}
+  profile!: Profile; // holds the fetched profile
+  constructor(private profileService: ProfileService) { }
 
 
-profile_contacts: MyContact[] = [];
+  profile_contacts: MyContact[] = [];
 
 
-ngOnInit(): void {
-  this.profileService.getProfile().subscribe({
-    next: (data) => {
-      if (Array.isArray(data) && data.length > 0) {
-        this.profile = data[0];  // Access the first profile in the list
-        this.profile_contacts = this.profile.all_links ?? [];
-      } else {
-        console.warn('No profile data found.');
-      }
-    },
-    error: (err) => console.error('Error loading profile', err)
-  });
-}
+  ngOnInit(): void {
+    this.profileService.getProfile().subscribe({
+      next: (data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          this.profile = data[0];  // Access the first profile in the list
+          this.profile_contacts = this.profile.all_links ?? [];
+        } else {
+          console.warn('No profile data found.');
+        }
+      },
+      error: (err) => console.error('Error loading profile', err)
+    });
+  }
+
+  scrollToSection(sectionId: string, event?: MouseEvent) {
+    if (event) {
+      event.preventDefault(); // Prevents jumping to top
+    }
+
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
 }
