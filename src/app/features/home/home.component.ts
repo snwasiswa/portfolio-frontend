@@ -6,6 +6,7 @@ import { CardModule } from 'primeng/card';
 
 import { ProfileService } from '../../core/services/profile/profile.service';
 import { Profile } from '../../core/models/profile/profile.model';
+import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
 
 interface Section {
   id: string;
@@ -19,7 +20,7 @@ interface Section {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule, CardModule],
+  imports: [CommonModule, RouterModule, ButtonModule, CardModule, SafeHtmlPipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

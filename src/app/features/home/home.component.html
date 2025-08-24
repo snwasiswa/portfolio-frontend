@@ -16,12 +16,9 @@
 
     <div class="welcome-section">
       <h2 class="scrolling-text">Welcome!</h2>
-      <p class="lead">
-        My passion lies in developing elegant and scalable code that not only meets technical requirements but also
-        addresses practical problems effectively. I strive to write clean and maintainable solutions that can grow with
-        evolving needs while ensuring reliability and performance. Through thoughtful design and continuous learning,
-        I aim to create software that makes a meaningful impact.
-      </p>
+      <h3 class="lead" >
+        <div *ngIf="profile?.welcome_summary" [innerHTML]="profile.welcome_summary! | safeHtml"></div>
+      </h3>
     </div>
   </div>
 

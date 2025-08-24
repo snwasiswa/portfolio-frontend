@@ -2,8 +2,7 @@
 
   <h2 class="scrolling-text">Contact</h2>
   <h3 class="contact-summary">
-    Have a question, collaboration idea, or opportunity to discuss? Feel free to reach out—I'm always open to connecting
-    with fellow engineers, developers, teams, or anyone interested in working together.
+     <div *ngIf="profile?.contact_summary" [innerHTML]="profile.contact_summary! | safeHtml"></div>
   </h3>
 
   <div class="contact-form-container">

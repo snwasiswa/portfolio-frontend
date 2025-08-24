@@ -1,10 +1,7 @@
 <div class="page-container">
   <h2 class="scrolling-text">Resume</h2>
   <h3 class="resume-summary">
-    Explore a detailed overview of my academic background, professional experience, technical skills, and personal
-    projects.
-    This resume showcases my journey as a developer, highlighting key milestones, capabilities, and the tools I've
-    mastered along the way.
+    <div *ngIf="profile?.resume_summary" [innerHTML]="profile.resume_summary! | safeHtml"></div>
   </h3>
 
   <!-- Button to open the password dialog -->

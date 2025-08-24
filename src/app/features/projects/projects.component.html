@@ -4,11 +4,7 @@
   <div class="project-category">
     <h2>Academic Projects</h2>
     <h3 class="project-summary">
-      These projects were developed as part of my academic curriculum and reflect my hands-on experience with applying
-      theoretical principles to real-world scenarios. From implementing complex algorithms and designing full-stack
-      applications to exploring machine learning models and systems programming, each project demonstrates my ability
-      to turn academic knowledge into practical, functional solutions across domains like software engineering,
-      artificial intelligence, and data structures.
+      <div *ngIf="profile?.academic_projects_summary" [innerHTML]="profile.academic_projects_summary! | safeHtml"></div>
     </h3>
 
     <div class="scroll-wrapper" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
@@ -43,9 +39,7 @@
   <div class="project-category">
     <h2>Side Projects</h2>
     <h3 class="project-summary">
-      My side projects reflect a passion for hands-on learning, where I explore new technologies, build real-world
-      solutions, and push my creativity beyond academic boundaries. From full-stack applications to UI experiments,
-      these projects highlight my initiative and adaptability.
+      <div *ngIf="profile?.side_projects_summary" [innerHTML]="profile.side_projects_summary! | safeHtml"></div>
     </h3>
     <div class="scroll-wrapper" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
       <button class="arrow-btn left" (click)="scroll(sideScroll, -300, 'side')">&#8592;</button>

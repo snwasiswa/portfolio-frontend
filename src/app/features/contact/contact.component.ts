@@ -18,6 +18,9 @@ import { Toast } from 'primeng/toast';
 import { Message } from 'primeng/message';
 import { ContactFormModel } from '../../core/models/contact/contact.model';
 import { CommonModule } from '@angular/common';
+import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
+import {ProfileService} from '../../core/services/profile/profile.service';
+import {Profile} from '../../core/models/profile/profile.model';
 
 @Component({
   selector: 'app-contact',
@@ -35,18 +38,23 @@ import { CommonModule } from '@angular/common';
     ButtonModule,
     Button,
     Toast,
-    Message // Added this to enable p-message
+    Message,
+    SafeHtmlPipe,
+    // Added this to enable p-message
   ],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent {
+  profile!: Profile;
   contactForm: FormGroup<ContactFormModel>;
 
   constructor(
     private fb: FormBuilder,
     private contactService: ContactService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private profileService: ProfileService
+
   ) {
     this.contactForm = this.fb.group({
       name: new FormControl('', {
@@ -67,6 +75,19 @@ export class ContactComponent {
         nonNullable: true,
         validators: [Validators.required]
       })
+    });
+  }
+
+    ngOnInit(): void {
+    this.profileService.getProfile().subscribe({
+      next: (data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          this.profile = data[0];  // Access the first profile in the list
+        } else {
+          console.warn('No profile data found.');
+        }
+      },
+      error: (err) => console.error('Error loading profile', err)
     });
   }
 

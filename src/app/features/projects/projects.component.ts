@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ProjectsService } from '../../core/services/projects/projects.service';
 import { Project } from '../../core/models/projects/project.model';
 import {Button} from 'primeng/button';
+import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
+import {Profile} from '../../core/models/profile/profile.model';
+import {ProfileService} from '../../core/services/profile/profile.service';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, Button],
+  imports: [CommonModule, Button, SafeHtmlPipe],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
@@ -24,11 +27,23 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   private scrollInterval: any;
   private hovered = false;
 
-  constructor(private projectsService: ProjectsService) {}
+  profile!: Profile; // holds the fetched profile
+
+  constructor(private projectsService: ProjectsService, private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.loadProjects();
     this.startAutoScroll();
+    this.profileService.getProfile().subscribe({
+      next: (data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          this.profile = data[0];  // Access the first profile in the list
+        } else {
+          console.warn('No profile data found.');
+        }
+      },
+      error: (err) => console.error('Error loading profile', err)
+    });
   }
 
   ngOnDestroy(): void {

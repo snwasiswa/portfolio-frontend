@@ -24,6 +24,12 @@ export interface Profile {
   };
   title?: string | null; // Title of the profile (optional)
   biography?: string | null; // Biography text (optional)
+  welcome_summary?: string | null;
+  intro_summary?: string | null;
+  resume_summary?: string | null;
+  academic_projects_summary?: string | null;
+  side_projects_summary?: string | null;
+  contact_summary?: string | null;
   all_skills: Skill[]; // Many-to-many relationship with skills
   avatar?: string | null; // URL to the avatar image (optional)
   resume?: string | null; // URL to the resume file (optional)

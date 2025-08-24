@@ -3,10 +3,9 @@
   <div class="welcome-container">
     <h2 class="scrolling-text">At glance</h2>
   </div>
-  <h3 class="intro-summary">This section offers a concise introduction to who I am, showcasing my background, skills,
-    and passions. You’ll
-    find a brief biography along with important links to connect with me. Whether you want to collaborate, hire, or just
-    have a tech conversation, this is your go-to spot to learn more and get in touch.</h3>
+  <h3 class="intro-summary">
+  <div *ngIf="profile?.intro_summary" [innerHTML]="profile.intro_summary! | safeHtml"></div>
+    </h3>
   <!-- Profile & Welcome Section -->
   <div class="profile-section bg-dark bg-opacity-75 p-4 rounded" *ngIf="profile">
     <!-- Left: Profile Info -->
