@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { Profile } from '../../models/profile/profile.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment} from '../../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/profiles/';
-  private readonly resumeUrl = 'http://localhost:8000/api/download-resume/';
+  private apiUrl = environment.apiUrl + 'api/profiles/';
+  private readonly resumeUrl = environment.apiUrl + 'api/download-resume/';
 
   constructor(private http: HttpClient) {}
 
