@@ -1,5 +1,6 @@
 {
-  "buildCommand": "npm run build -- --configuration production && echo '{\"apiUrl\":\"'$API_URL'\"}' > dist/portfolio-frontend/config.json",
+  "buildCommand": "npm install && npm run build -- --configuration production && echo '{\"apiUrl\":\"'$API_URL'\"}' > dist/portfolio-frontend/config.json",
+  "outputDirectory": "dist/portfolio-frontend",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
