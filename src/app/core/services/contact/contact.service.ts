@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = '';
 
-  constructor(private http: HttpClient) {
-    // Load API URL dynamically from config.json
-    this.http.get<{ apiUrl: string }>('/config.json').subscribe(config => {
-      this.apiUrl = config.apiUrl + 'api/contacts/';
-    });
-  }
+  private apiUrl = environment.apiUrl + 'api/contacts/';
 
+  constructor(private http: HttpClient) { }
+
+  // Method to submit the contact form data to the backend API
   submitContactForm(contactData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, contactData);
   }

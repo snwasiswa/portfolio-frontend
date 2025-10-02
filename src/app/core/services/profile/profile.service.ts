@@ -1,41 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Profile } from '../../models/profile/profile.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { environment} from '../../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = '';
-  private resumeUrl = '';
 
-  constructor(private http: HttpClient) {
-    // Load API URLs dynamically from config.json
-    this.http.get<{ apiUrl: string }>('/config.json').subscribe(config => {
-      this.apiUrl = config.apiUrl + 'api/profiles/';
-      this.resumeUrl = config.apiUrl + 'api/download-resume/';
-    });
-  }
+  private apiUrl = environment.apiUrl + 'api/profiles/';
+  private readonly resumeUrl = environment.apiUrl + 'api/download-resume/';
+
+  constructor(private http: HttpClient) {}
 
   getProfile(): Observable<Profile> {
     return this.http.get<Profile>(this.apiUrl);
   }
 
   downloadResumeWithPassword(password: string): Observable<Blob> {
-    // Ensure resumeUrl is loaded before sending request
-    return from(new Promise<void>((resolve) => {
-      if (this.resumeUrl) {
-        resolve();
-      } else {
-        this.http.get<{ apiUrl: string }>('/config.json').subscribe(config => {
-          this.resumeUrl = config.apiUrl + 'api/download-resume/';
-          resolve();
-        });
-      }
-    })).pipe(
-      switchMap(() => this.http.post(this.resumeUrl, { password }, { responseType: 'blob' }))
-    );
-  }
+  return this.http.post(this.resumeUrl,
+    { password },
+    { responseType: 'blob' }
+  );
 }
+}
+
