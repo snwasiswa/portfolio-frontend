@@ -3,11 +3,12 @@ import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
 import { environment } from './environments/environment';
 
-// Fetch runtime config before bootstrapping
+// Load runtime config from public/config.json
 fetch('/config.json')
   .then(response => response.json())
   .then(config => {
-    environment.apiUrl = config.apiUrl; // set API URL dynamically
+    (window as any).__env = config;      // runtime global
+    environment.apiUrl = config.apiUrl;   // optional override
 
     bootstrapApplication(AppComponent, appConfig)
       .catch(err => console.error(err));
@@ -15,7 +16,6 @@ fetch('/config.json')
   .catch(err => {
     console.error('Could not load config.json', err);
 
-    // Fallback bootstrap even if config.json fails
     bootstrapApplication(AppComponent, appConfig)
       .catch(err => console.error(err));
   });

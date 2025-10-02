@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
 
-  private apiUrl = environment.apiUrl + 'api/contacts/';
+  // Read API URL dynamically from runtime config
+  private apiUrl = (window as any).__env?.apiUrl + 'api/contacts/';
 
   constructor(private http: HttpClient) { }
 
