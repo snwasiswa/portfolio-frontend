@@ -1,0 +1,8 @@
+[build]
+  command = "ng build --configuration production && echo '{\"apiUrl\": \"'$API_URL'\"}' > dist/portfolio-frontend/config.json"
+  publish = "dist/portfolio-frontend"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
