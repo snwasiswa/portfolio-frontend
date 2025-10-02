@@ -1,6 +1,6 @@
 [build]
-  command = "ng build --configuration production && echo '{\"apiUrl\": \"'$API_URL'\"}' > dist/portfolio-frontend/config.json"
-  publish = "dist/portfolio-frontend"
+  command = "ng build --configuration production && echo '{\"apiUrl\": \"'$API_URL'\"}' > dist/portfolio-frontend/browserconfig.json"
+  publish = "dist/portfolio-frontend/browser"
 
 [[redirects]]
   from = "/*"
