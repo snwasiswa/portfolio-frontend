@@ -3,19 +3,31 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
-  padding-right: 1.5rem;
-  //background-color: #000; /* Set the background to black */
-  //color: #fff; /* Text color to white for contrast */
 }
 
+/* Limit width of contact block */
+.contact-block {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Scrolling heading text */
 .scrolling-text {
   display: inline-block;
-  padding-left: 100%; /* Start offscreen to the right */
+  padding-left: 100%;
   animation: marquee 10s linear infinite;
   font-size: 2rem;
   white-space: nowrap;
+  color: #00bcd4;
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Contact summary description */
 .contact-summary {
   font-weight: normal;
   font-size: 1.25rem;
@@ -26,73 +38,119 @@
   line-height: 1.6;
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+/* Contact Section container */
+.contact-summary-section {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
-/* Styling for the contact form container */
+/* Contact info column */
+.contact-summary-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Contact text column */
+.contact-section {
+  flex: 1;
+  margin-left: 2rem;
+}
+
+.contact-section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Contact Form container */
 .contact-form-container {
   max-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(40, 40, 40, 1)); /* Dark gradient */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(40, 40, 40, 1));
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  border: 1px solid transparent;
+  background-clip: padding-box;
 }
 
-/* Hover effect for the contact form container */
 .contact-form-container:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  border-color: #007bff;
 }
 
-/* Styling for form field containers (input fields and labels) */
+.contact-form-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.4));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contact-form-container:hover::before {
+  opacity: 1;
+}
+
+/* Input field wrapper */
 .p-field {
   margin-bottom: 1.5rem;
   position: relative;
 }
 
-/* Label styling */
 .p-field label {
   display: block;
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #ccc; /* Lighter text color for labels */
+  color: #ccc;
   transition: color 0.3s ease;
 }
 
-/* Input text field and text area styling */
+/* Input + Textarea */
 input, textarea {
   width: 100%;
   padding: 0.8rem;
   font-size: 1rem;
-  border: 1px solid #444; /* Darker border for black background */
+  border: 1px solid #444;
   border-radius: 6px;
-  background-color: #222; /* Dark background for inputs */
-  color: #fff; /* Text color for inputs */
+  background-color: #222;
+  color: #fff;
   box-sizing: border-box;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-/* Focus and hover effects for input fields */
 input:focus, textarea:focus {
   border-color: #007bff;
-  background-color: #333; /* Slightly lighter background on focus */
+  background-color: #333;
   outline: none;
 }
 
-/* Add subtle fade effect */
-input, textarea {
-  transition: all 0.3s ease;
+/* Error states */
+.p-field input.ng-invalid.ng-touched,
+.p-field textarea.ng-invalid.ng-touched {
+  border-color: #e74c3c;
+  transition: border-color 0.3s ease;
+}
+
+/* Error messages */
+p-message {
+  margin-top: 0.5rem;
+  color: red;
+  font-size: 0.875rem;
 }
 
 /* Button styling */
@@ -108,7 +166,6 @@ button {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-/* Button hover and focus effects */
 button:hover {
   background-color: #0056b3;
   transform: translateY(-3px);
@@ -119,44 +176,55 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Error message styling */
-p-message {
-  margin-top: 0.5rem;
-  color: red;
-  font-size: 0.875rem;
+/* --------- Responsive Adjustments --------- */
+@media (max-width: 1024px) {
+  .contact-summary-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Info comes first, then text, then form */
+  .contact-summary-info {
+    order: 1;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-section {
+    order: 2;
+    margin: 0;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-form-container {
+    order: 3;
+    width: 100%;
+    margin: 0 auto 2rem;
+  }
+
+  .contact-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .contact-summary {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
 }
 
-/* Add fade-away effect for fields when invalid */
-.p-field input.ng-invalid.ng-touched,
-.p-field textarea.ng-invalid.ng-touched {
-  border-color: #e74c3c;
-  transition: border-color 0.3s ease;
-}
+@media (max-width: 480px) {
+  .scrolling-text {
+    font-size: 1.25rem;
+  }
 
-/* Adding a gradient background and hover effect to the form */
-.contact-form-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.4));
-  z-index: -1;
-  transition: opacity 0.3s ease;
-  opacity: 0;
-}
+  button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
 
-.contact-form-container:hover::before {
-  opacity: 1;
-}
-
-/* Adding a subtle border effect to the form */
-.contact-form-container {
-  border: 1px solid transparent;
-  background-clip: padding-box;
-}
-
-.contact-form-container:hover {
-  border-color: #007bff;
+  input, textarea {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
 }

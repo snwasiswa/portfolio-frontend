@@ -35,7 +35,6 @@
 .welcome-section h2 {
   font-size: 2rem;
   font-weight: bold;
-  color: #fff;
   margin-bottom: 1rem;
 }
 
@@ -259,6 +258,7 @@ p-card {
   font-size: 2rem;
   white-space: nowrap;
   will-change: transform;
+  color: #00bcd4;
 }
 
 @keyframes marquee {
