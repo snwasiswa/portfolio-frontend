@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { ContactService } from '../../core/services/contact/contact.service';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { ContactFormModel } from '../../core/models/contact/contact.model';
 import { ProfileService } from '../../core/services/profile/profile.service';
 import { Profile } from '../../core/models/profile/profile.model';
 import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
+
+// PrimeNG UI modules
 import { InputText } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { Textarea } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
-import { Button } from 'primeng/button';
 import { Toast } from 'primeng/toast';
 import { Message } from 'primeng/message';
-import { NgxIntlTelInputModule, PhoneNumberFormat, CountryISO } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-contact',
@@ -23,14 +21,11 @@ import { NgxIntlTelInputModule, PhoneNumberFormat, CountryISO } from 'ngx-intl-t
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    NgxIntlTelInputModule,
 
     // PrimeNG components
     InputText,
-    InputTextarea,
+    Textarea,
     ButtonModule,
-    Button,
     Toast,
     Message,
     SafeHtmlPipe
@@ -41,9 +36,6 @@ import { NgxIntlTelInputModule, PhoneNumberFormat, CountryISO } from 'ngx-intl-t
 export class ContactComponent implements OnInit {
   profile!: Profile;
   contactForm: FormGroup;
-
-  preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
-  selectedCountryISO: CountryISO = CountryISO.UnitedStates;
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +52,6 @@ export class ContactComponent implements OnInit {
         nonNullable: true,
         validators: [Validators.required, Validators.email]
       }),
-      phone: new FormControl(null, [Validators.required]), // ngx-intl-tel-input handles validation
       subject: new FormControl(''),
       message: new FormControl('', {
         nonNullable: true,
@@ -85,8 +76,7 @@ export class ContactComponent implements OnInit {
   onSubmit() {
     if (this.contactForm.valid) {
       const payload = {
-        ...this.contactForm.value,
-        phone: this.contactForm.value.phone?.internationalNumber || '' // Extract formatted phone number
+        ...this.contactForm.value
       };
 
       this.contactService.submitContactForm(payload).subscribe({
