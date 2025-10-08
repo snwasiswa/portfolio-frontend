@@ -1,36 +1,30 @@
-import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactService } from '../../core/services/contact/contact.service';
 import { MessageService } from 'primeng/api';
-// PrimeNG components for standalone usage
+import { CommonModule } from '@angular/common';
+import { ContactFormModel } from '../../core/models/contact/contact.model';
+import { ProfileService } from '../../core/services/profile/profile.service';
+import { Profile } from '../../core/models/profile/profile.model';
+import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
 import { InputText } from 'primeng/inputtext';
 import { InputTextarea } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
 import { Button } from 'primeng/button';
 import { Toast } from 'primeng/toast';
 import { Message } from 'primeng/message';
-import { ContactFormModel } from '../../core/models/contact/contact.model';
-import { CommonModule } from '@angular/common';
-import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
-import {ProfileService} from '../../core/services/profile/profile.service';
-import {Profile} from '../../core/models/profile/profile.model';
+import { NgxIntlTelInputModule, PhoneNumberFormat, CountryISO } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
   providers: [MessageService],
   imports: [
-
+    CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CommonModule,
+    NgxIntlTelInputModule,
 
     // PrimeNG components
     InputText,
@@ -39,22 +33,23 @@ import {Profile} from '../../core/models/profile/profile.model';
     Button,
     Toast,
     Message,
-    SafeHtmlPipe,
-    // Added this to enable p-message
+    SafeHtmlPipe
   ],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
   profile!: Profile;
-  contactForm: FormGroup<ContactFormModel>;
+  contactForm: FormGroup;
+
+  preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
+  selectedCountryISO: CountryISO = CountryISO.UnitedStates;
 
   constructor(
     private fb: FormBuilder,
     private contactService: ContactService,
     private messageService: MessageService,
     private profileService: ProfileService
-
   ) {
     this.contactForm = this.fb.group({
       name: new FormControl('', {
@@ -65,12 +60,8 @@ export class ContactComponent {
         nonNullable: true,
         validators: [Validators.required, Validators.email]
       }),
-      phone: new FormControl<string | null>(null, [
-  Validators.required,
-  Validators.pattern(/^\+?\d{10,15}$/)
-]),
-
-      subject: new FormControl<string | null>(null),
+      phone: new FormControl(null, [Validators.required]), // ngx-intl-tel-input handles validation
+      subject: new FormControl(''),
       message: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required]
@@ -78,11 +69,11 @@ export class ContactComponent {
     });
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.profileService.getProfile().subscribe({
       next: (data) => {
         if (Array.isArray(data) && data.length > 0) {
-          this.profile = data[0];  // Access the first profile in the list
+          this.profile = data[0];
         } else {
           console.warn('No profile data found.');
         }
@@ -93,8 +84,13 @@ export class ContactComponent {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      this.contactService.submitContactForm(this.contactForm.value).subscribe({
-        next: (response) => {
+      const payload = {
+        ...this.contactForm.value,
+        phone: this.contactForm.value.phone?.internationalNumber || '' // Extract formatted phone number
+      };
+
+      this.contactService.submitContactForm(payload).subscribe({
+        next: () => {
           this.messageService.add({
             severity: 'success',
             summary: 'Message Sent',

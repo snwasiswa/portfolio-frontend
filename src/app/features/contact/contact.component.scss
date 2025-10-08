@@ -176,6 +176,78 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* -------- ngx-intl-tel-input styling -------- */
+.phone-input-wrapper {
+  width: 100%;
+  position: relative;
+  display: block;
+}
+
+/* Make ngx-intl-tel-input resemble pInputText */
+::ng-deep ngx-intl-tel-input {
+  display: block !important;
+  width: 100% !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Container styling */
+::ng-deep ngx-intl-tel-input .intl-tel-input {
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding-left: 3.5rem;
+  padding-right: 0.75rem;
+  background-color: #222;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Focus style */
+::ng-deep ngx-intl-tel-input .intl-tel-input:focus-within {
+  border-color: #007bff;
+  background-color: #333;
+}
+
+/* Input inside the component */
+::ng-deep ngx-intl-tel-input input {
+  border: none !important;
+  outline: none !important;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.8rem 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Flag positioning */
+::ng-deep ngx-intl-tel-input .selected-flag {
+  position: absolute !important;
+  left: 0.75rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  z-index: 2;
+  height: 1.5rem;
+  width: 2rem;
+}
+
+/* Hide the dropdown arrow */
+::ng-deep ngx-intl-tel-input .flag-dropdown {
+  display: none !important;
+}
+
+/* Error styling */
+::ng-deep ngx-intl-tel-input.ng-invalid.ng-touched .intl-tel-input {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.5) !important;
+}
+
 /* --------- Responsive Adjustments --------- */
 @media (max-width: 1024px) {
   .contact-summary-section {
@@ -183,7 +255,6 @@ button:disabled {
     text-align: center;
   }
 
-  /* Info comes first, then text, then form */
   .contact-summary-info {
     order: 1;
     width: 100%;
