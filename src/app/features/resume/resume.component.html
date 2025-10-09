@@ -125,7 +125,7 @@
                 <li *ngFor="let skill of group.skills">
                   <div class="skill-label">
                     <i class="pi pi-check-circle"></i>
-                    <p-image [src]="skill.image" alt="Image" width="40" preview></p-image>
+                    <p-image [src]="skill.image" alt="Image" width="40" preview class="skill-image"></p-image>
                     {{ skill.name }}
                   </div>
                   <div class="skill-bar-container" [title]="getSkillTooltip(skill.rating)">

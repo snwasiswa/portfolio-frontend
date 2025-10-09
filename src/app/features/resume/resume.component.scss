@@ -263,6 +263,7 @@
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
+  gap: 15px; /* adds space between items */
 }
 
 .skill-label i {
@@ -536,6 +537,11 @@
   margin-bottom: 1.5rem;
 }
 
+
+
+.skill-image {
+  display: inline-block;
+}
 
 .password-dialog input {
   width: 85%;
