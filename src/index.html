@@ -21,17 +21,13 @@
 </head>
 
 <body>
-
   <!-- Video Background -->
   <video autoplay muted loop playsinline preload="auto" id="bg-video">
-    <!--<source src="https://player.vimeo.com/external/449659688.sd.mp4?s=30480146a845fd5c3ab9fc8390d3e8b1c9730210&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />-->
     Your browser does not support the video tag.
     <source src="videos/background.mp4" type="video/mp4" />
   </video>
 
-  <div class="page-container">
-
-  </div>
+  <div class="page-container"></div>
 
   <!-- Angular Root -->
   <app-root></app-root>
@@ -42,6 +38,12 @@
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     const video = document.getElementById('bg-video');
+    const audio = document.getElementById('intro-audio');
+
+    // Initialize flag to track if audio played
+    audio.isPlaying = false;
+
+    // Play background video
     if (video) {
       const playPromise = video.play();
       if (playPromise !== undefined) {
@@ -52,6 +54,23 @@
         });
       }
     }
+
+    // Wait for user interaction to play audio (due to browser policies)
+    const playAudioOnce = () => {
+      if (audio && audio.paused && !audio.isPlaying) {
+        audio.play().then(() => {
+          audio.isPlaying = true;  // Mark audio as playing
+        }).catch(err => {
+          console.warn("Audio play blocked:", err);
+        });
+      }
+      // Remove listeners after first interaction
+      window.removeEventListener('click', playAudioOnce);
+      window.removeEventListener('keydown', playAudioOnce);
+    };
+
+    window.addEventListener('click', playAudioOnce);
+    window.addEventListener('keydown', playAudioOnce);
   });
 </script>
 

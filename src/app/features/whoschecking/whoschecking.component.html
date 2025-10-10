@@ -1,16 +1,26 @@
+ <!-- Audio Intro -->
+ <audio id="intro-audio" preload="auto">
+   <source src="audios/mix.wav" type="audio/wav">
+   Your browser does not support the audio element.
+ </audio>
 <div class="watching-wrapper" [ngStyle]="{ 'background-image': backgroundGradient }">
-  <h2>Who's Checking?</h2>
+  <h2 [ngClass]="titleAnimationClass">Who's Checking?</h2>
   <div class="profiles">
     <div
       class="profile"
       *ngFor="let user of users"
+      tabindex="0"
+      role="button"
+      [attr.aria-label]="'Select ' + user.name + ' profile'"
       (click)="selectProfile(user)"
+      (keydown)="onKeyDown($event, user)"
     >
       <p-avatar
         class="avatar custom-avatar"
         [label]="user.initial"
-        [style]="{ 'background-color': user.color }"
-        shape="circle">
+        [style]="{ 'background-color': user.color, color: 'white' }"
+        shape="circle"
+      >
       </p-avatar>
       <p>{{ user.name }}</p>
     </div>
