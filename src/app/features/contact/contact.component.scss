@@ -3,6 +3,10 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+
+  /* subtle shadow/glow for transparent backgrounds */
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
+  border-radius: 12px;
 }
 
 /* Limit width of contact block */
@@ -12,16 +16,6 @@
   padding: 0 1rem;
 }
 
-/* Scrolling heading text */
-.scrolling-text {
-  display: inline-block;
-  padding-left: 100%;
-  animation: marquee 10s linear infinite;
-  font-size: 2rem;
-  white-space: nowrap;
-  color: #00bcd4;
-}
-
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
@@ -29,13 +23,68 @@
 
 /* Contact summary description */
 .contact-summary {
-  font-weight: normal;
-  font-size: 1.25rem;
-  color: #ddd;
-  margin: 1rem auto 2rem;
-  max-width: 800px;
+  position: relative;
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: #e0f7ff; /* Soft, bright cyan-white for strong contrast */
+  margin: 2rem auto;
+  max-width: 760px;
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.85;
+  letter-spacing: 0.4px;
+  padding: 1rem 1.5rem;
+
+  /* Optional subtle translucent background for readability */
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+
+  /* Text smoothing & rendering for clarity */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* Smooth transitions */
+  transition:
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    letter-spacing 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    text-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.4s ease;
+
+  will-change: transform, color, text-shadow;
+
+  cursor: default;
+  user-select: text;
+  backface-visibility: hidden;
+
+  /* Subtle base glow for legibility on any background */
+  text-shadow:
+    0 0 6px rgba(224, 247, 255, 0.4),
+    0 0 10px rgba(224, 247, 255, 0.25);
+
+  /* Fade-in animation */
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.contact-summary:hover {
+  color: #00d8ff; /* Bright, eye-catching cyan */
+  letter-spacing: 0.75px;
+  transform: scale(1.1) translateY(-5px);
+  text-shadow:
+    0 0 10px rgba(0, 216, 255, 0.9),
+    0 0 22px rgba(0, 216, 255, 0.6),
+    0 0 40px rgba(0, 216, 255, 0.35);
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Fade-in keyframes */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Contact Section container */
@@ -279,15 +328,12 @@ button:disabled {
   }
 
   .contact-summary {
-    font-size: 1rem;
-    padding: 0 1rem;
+    font-size: 1.1rem;
+    padding: 1rem 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .scrolling-text {
-    font-size: 1.25rem;
-  }
 
   button {
     font-size: 0.9rem;
@@ -297,5 +343,12 @@ button:disabled {
   input, textarea {
     font-size: 0.9rem;
     padding: 0.6rem;
+  }
+
+  .contact-summary {
+    font-size: 1.0rem;
+    padding: 0.8rem 0.8rem;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
   }
 }

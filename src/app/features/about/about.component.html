@@ -1,7 +1,8 @@
 <div class="page-container">
-  <!-- Scrolling text heading -->
   <div class="welcome-container">
-    <h2 class="scrolling-text">At glance</h2>
+     <div class="section-title-wrapper">
+      <h1 class="section-title">At glance</h1>
+  </div>
   </div>
   <h3 class="intro-summary">
   <div *ngIf="profile?.intro_summary" [innerHTML]="profile.intro_summary! | safeHtml"></div>
@@ -16,7 +17,7 @@
 
     <!-- Right (or bottom on mobile): Welcome Section -->
     <div class="welcome-section">
-      <h3>Where to Find Me</h3>
+      <h2>Where to Find Me</h2>
       <ul class="social-links" *ngIf="profile_contacts?.length">
         <ng-container *ngFor="let link of profile_contacts">
           <li *ngIf="link.category === 'Link' && link.name" class="link-item">
@@ -28,7 +29,7 @@
         </ng-container>
       </ul>
 
-      <h3>What's Next!</h3>
+      <h2>What's Next!</h2>
       <p class="lead">
         If you’re interested in collaborating, hiring, or just chatting tech, feel free to
         <a href="#" (click)="scrollToSection('contact', $event)" class="inline-link">

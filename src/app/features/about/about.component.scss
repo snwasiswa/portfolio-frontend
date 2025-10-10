@@ -12,15 +12,6 @@
   position: relative;
 }
 
-.scrolling-text {
-  display: inline-block;
-  padding-left: 100%; /* Start offscreen to the right */
-  animation: marquee 10s linear infinite;
-  font-size: 2rem;
-  white-space: nowrap;
-  color: #00bcd4;
-}
-
 @keyframes marquee {
   0% {
     transform: translateX(0);
@@ -122,26 +113,64 @@
   height: 50%;
 }
 
+/* Updated Intro Summary */
 .intro-summary {
-  font-weight: normal;
-  font-size: 1.25rem;
-  color: #ddd;
-  margin: 1rem auto 2rem;
-  max-width: 800px;
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: #e0f7ff; /* Soft bright cyan */
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.85;
+  letter-spacing: 0.4px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+
+  /* Text smoothing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  transition:
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    letter-spacing 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    text-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.4s ease;
+
+  will-change: transform, color, text-shadow;
+
+  cursor: default;
+  user-select: text;
+  backface-visibility: hidden;
+
+  /* Subtle glow */
+  text-shadow:
+    0 0 6px rgba(224, 247, 255, 0.4),
+    0 0 10px rgba(224, 247, 255, 0.25);
+
+  /* Fade-in animation */
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-.intro-summary {
-  max-width: 100%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  margin: 1rem 0;
-  font-size: 1.25rem;
-  line-height: 1.6;
+.intro-summary:hover {
+  color: #00d8ff;
+  letter-spacing: 0.75px;
+  transform: scale(1.1) translateY(-5px);
+  text-shadow:
+    0 0 10px rgba(0, 216, 255, 0.9),
+    0 0 22px rgba(0, 216, 255, 0.6),
+    0 0 40px rgba(0, 216, 255, 0.35);
+  background-color: rgba(0, 0, 0, 0.45);
 }
 
-
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* Styling for the Profile and Welcome Section background */
 .bg-dark {
@@ -262,7 +291,6 @@ p-card {
 .inline-link:hover {
   color: #007bff;
 }
-
 
 /* Add gradient overlay for hover effect */
 .custom-gradient-card ::ng-deep .p-card::before {
