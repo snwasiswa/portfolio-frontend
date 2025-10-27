@@ -1,39 +1,72 @@
-/* Container for the entire page */
+/* === GLOBAL CONTAINER === */
 .page-container {
-  max-width: 1200px;
+  max-width: 87.5rem;
   margin: 0 auto;
   padding: 0 1.5rem;
+  width: 100%;
+  overflow: visible !important;
+  position: relative;
+  z-index: 1;
 }
 
-/* Styling for each project category section */
+/* === SECTION TITLES === */
+.section-title-wrapper {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 2.4rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00d8ff, #00bcd4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 auto;
+  text-transform: uppercase;
+}
+
+/* === PROJECT CATEGORY === */
 .project-category {
   margin-bottom: 3rem;
   position: relative;
+  width: 100%;
+  overflow: visible !important;
+  padding-bottom: 2rem;
+  z-index: 2;
 }
 
 .project-category h2 {
   text-align: center;
   margin-bottom: 1rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.8rem;
 }
 
-/* Wrapper for arrows and scrollable content */
-.carousel-wrapper {
+/* === SCROLL WRAPPER === */
+.scroll-wrapper {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: visible !important;
   position: relative;
+  z-index: 2;
 }
 
-/* Horizontal scrolling container */
+/* === SCROLL CONTAINER === */
 .scroll-container {
   display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
   scroll-behavior: smooth;
   gap: 20px;
   padding: 10px 0;
-  scrollbar-width: thin;
-  scrollbar-color: #999 transparent;
   max-width: 100%;
   flex-grow: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #666 transparent;
 }
 
 .scroll-container::-webkit-scrollbar {
@@ -41,228 +74,105 @@
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #666;
   border-radius: 4px;
 }
 
-/* Project card styling */
+/* === PROJECT CARD === */
 .project-card {
   position: relative;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
-  border-radius: 10px;
+  background: linear-gradient(to bottom, rgba(15, 15, 15, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%);
+  border-radius: 12px;
   width: 300px;
   flex: 0 0 auto;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
 }
 
-/* Gradient overlay on hover (like contact-form-container) */
+/* Hover overlay */
 .project-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.4));
-  z-index: 1;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(0, 123, 255, 0.15), rgba(0, 255, 204, 0.3));
   opacity: 0;
-  transition: opacity 0.3s ease;
+  z-index: 1;
+  transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
 .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05) translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
 }
 
 .project-card:hover::before {
   opacity: 1;
 }
 
+/* === PROJECT IMAGE === */
 .project-card img {
   width: 100%;
   height: 180px;
   object-fit: cover;
   position: relative;
   z-index: 2;
+  transition: transform 0.4s ease;
 }
 
+.project-card:hover img {
+  transform: scale(1.05);
+}
+
+/* === PROJECT INFO === */
 .project-info {
   padding: 1rem;
   color: white;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
   position: relative;
   z-index: 2;
 }
 
 .project-info h4 {
   margin: 0;
-  font-size: 18px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
 }
 
 .project-info p {
   margin-top: 0.5rem;
-  font-size: 14px;
+  font-size: 0.95rem;
   color: #ccc;
+  line-height: 1.5;
 }
 
-/* Navigation arrows */
-.arrow-btn {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 0 1rem;
-  transition: color 0.3s ease;
-  z-index: 2;
+.project-card:hover .project-info h4 {
+  color: #00d8ff;
 }
 
-.arrow-btn:hover {
-  color: #00bcd4;
+/* === BUTTON CONTAINER === */
+.button-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.75rem;
 }
 
-/* Dots under the carousels */
-.dots {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.dots span {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: #ccc;
-  border-radius: 50%;
-  margin: 0 5px;
-  transition: background 0.3s ease;
-}
-
-.dots span.active {
-  background: #00bcd4;
-}
-
-/* Contact form container */
-.contact-form-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(40, 40, 40, 1));
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid transparent;
-  background-clip: padding-box;
-}
-
-.contact-form-container:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  border-color: #007bff;
-}
-
-/* Hover overlay gradient for contact form */
-.contact-form-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.4));
-  z-index: -1;
-  transition: opacity 0.3s ease;
-  opacity: 0;
-}
-
-.contact-form-container:hover::before {
-  opacity: 1;
-}
-
-/* PrimeNG field structure */
-.p-field {
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.p-field label {
-  display: block;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #ccc;
-  transition: color 0.3s ease;
-}
-
-/* Inputs and Textareas */
-input, textarea {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #444;
-  border-radius: 6px;
-  background-color: #222;
-  color: #fff;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-}
-
-input:focus, textarea:focus {
-  border-color: #007bff;
-  background-color: #333;
-  outline: none;
-}
-
-/* Buttons */
-button {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-3px);
-}
-
-button:disabled {
-  background-color: #444;
-  cursor: not-allowed;
-}
-
-/* Error messaging */
-p-message {
-  margin-top: 0.5rem;
-  color: red;
-  font-size: 0.875rem;
-}
-
-/* Invalid field highlighting */
-.p-field input.ng-invalid.ng-touched,
-.p-field textarea.ng-invalid.ng-touched {
-  border-color: #e74c3c;
-  transition: border-color 0.3s ease;
-}
-
+/* === TECH STACK === */
 .project-tech-stack {
   margin-top: 1rem;
-  padding-left: 2rem;
+  padding-left: 1rem;
 }
 
 .tech-list {
   list-style: none;
-  padding-left: 0.5rem;
+  padding-left: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -274,119 +184,312 @@ p-message {
   border-radius: 4px;
   font-size: 0.85rem;
   color: #000;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.project-summary {
-  font-weight: 600;
-  font-size: 1.35rem;
-  color: #e0f7ff; /* Soft bright cyan */
+.tech-list li:hover {
+  background-color: #10c95b;
+  transform: scale(1.05);
+}
+
+/* === DOTS === */
+.dots {
   text-align: center;
-  line-height: 1.85;
-  letter-spacing: 0.4px;
-  padding: 1rem 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-
-  /* Text smoothing */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-
-  transition:
-    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    letter-spacing 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    text-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.4s ease;
-
-  will-change: transform, color, text-shadow;
-
-  cursor: default;
-  user-select: text;
-  backface-visibility: hidden;
-
-  /* Subtle glow */
-  text-shadow:
-    0 0 6px rgba(224, 247, 255, 0.4),
-    0 0 10px rgba(224, 247, 255, 0.25);
-
-  /* Fade-in animation */
-  opacity: 0;
-  transform: translateY(15px);
-  animation: fadeInUp 0.8s ease forwards;
+  margin-top: 10px;
 }
 
-.project-summary:hover {
-  color: #00d8ff;
-  letter-spacing: 0.75px;
-  transform: scale(1.1) translateY(-5px);
-  text-shadow:
-    0 0 10px rgba(0, 216, 255, 0.9),
-    0 0 22px rgba(0, 216, 255, 0.6),
-    0 0 40px rgba(0, 216, 255, 0.35);
-  background-color: rgba(0, 0, 0, 0.45);
+.dots span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #888;
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.dots span.active {
+  background: #00d8ff;
+  transform: scale(1.2);
 }
 
-/* Custom button styles */
-::ng-deep .custom-button .p-button {
-  background-color: #0b3d91; /* Dark Blue */
+/* === ARROWS === */
+.arrow-btn {
+  background: transparent;
   border: none;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(11, 61, 145, 0.4);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 1rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+  z-index: 5;
 }
 
-::ng-deep .custom-button .p-button:hover {
-  background-color: #092f6b; /* Slightly darker blue */
-  box-shadow: 0 6px 16px rgba(11, 61, 145, 0.6);
-  transform: translateY(-2px);
+.arrow-btn:hover {
+  color: #00d8ff;
+  transform: scale(1.15);
 }
 
-::ng-deep .custom-button .p-button:focus {
-  box-shadow: 0 0 0 0.2rem rgba(11, 61, 145, 0.5);
-  outline: none;
+/* === DIALOG CAROUSEL === */
+.dialog-carousel {
+  position: relative;
+  width: 100%;
+  max-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+.carousel-wrapper img {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 10px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
+/* Carousel arrows */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
 
-/* On smaller screens, stack project cards vertically and disable horizontal scroll */
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Dots inside dialog */
+.dialog-carousel .dots {
+  margin-top: 0.75rem;
+}
+
+.dialog-carousel .dots span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #aaa;
+  border-radius: 50%;
+  margin: 0 3px;
+  transition: background 0.3s ease;
+}
+
+.dialog-carousel .dots span.active {
+  background: #00d8ff;
+}
+
+/* === PRIME NG DIALOG CUSTOMIZATION === */
+.p-dialog .p-dialog-header {
+  background: linear-gradient(90deg, #001f3f, #004080);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.p-dialog .p-dialog-content {
+  background-color: #0a0a0a;
+  color: #eee;
+  border-radius: 0 0 8px 8px;
+}
+
+/* === FLOATING DIALOG / IMAGE LIGHTBOX === */
+.floating-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.floating-dialog {
+  background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(90deg, #001f3f, #004080);
+  color: #fff;
+  font-weight: 600;
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+}
+
+.dialog-body {
+  position: relative;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dialog-body img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Carousel nav buttons inside floating dialog */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  padding: 0.5rem 0.8rem;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s ease, background 0.3s ease;
+  z-index: 2;
+}
+
+.carousel-nav.left {
+  left: 10px;
+}
+
+.carousel-nav.right {
+  right: 10px;
+}
+
+.carousel-nav:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Dots for floating dialog */
+.carousel-dots {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.carousel-dots span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #aaa;
+  border-radius: 50%;
+  margin: 0 4px;
+  transition: background 0.3s ease;
+}
+
+.carousel-dots span.active {
+  background: #00d8ff;
+}
+
+/* === RESPONSIVE DESIGN === */
 @media (max-width: 768px) {
   .scroll-container {
-    flex-direction: column; /* Stack items vertically */
-    overflow-x: visible !important; /* Remove horizontal scrolling */
-    max-width: 100%;
-    gap: 1.5rem; /* Space between cards vertically */
-    scrollbar-width: none; /* Hide scrollbar */
+    flex-direction: column !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
   }
 
-  /* Hide scrollbar for WebKit browsers */
   .scroll-container::-webkit-scrollbar {
     display: none;
   }
 
-  /* Each project card takes full width on mobile */
-  .project-card {
-    width: 100%; /* Full container width */
-    flex: none; /* Disable flex shrinking/growing */
+  .arrow-btn {
+    display: none !important;
   }
 
-  /* Hide arrow buttons on mobile */
-  .arrow-btn {
-    display: none;
+  .project-card {
+    width: 100% !important;
+    flex: none;
+    min-height: 240px;
+    transform: none !important;
+  }
+
+  .project-card:hover {
+    transform: none !important;
+  }
+
+  .project-card::before {
+    display: none !important;
+  }
+
+  .page-container,
+  .project-category,
+  .scroll-wrapper {
+    overflow: visible !important;
+  }
+
+  .button-container {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .floating-dialog {
+    width: 95%;
+    max-height: 85vh;
+  }
+
+  .dialog-body img {
+    max-height: 70vh;
   }
 }

@@ -1,3 +1,5 @@
+import { ProjectImage } from '../projectimage/projectimage';
+
 export interface Portfolio {
   id: number;
   name: string;
@@ -13,4 +15,6 @@ export interface Portfolio {
   year?: string;
   technology?: string[];
   get_logo_url: string;
+  images?: ProjectImage[];
+  currentSlide?: number;
 }

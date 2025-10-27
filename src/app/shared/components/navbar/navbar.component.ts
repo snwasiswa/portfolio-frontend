@@ -7,7 +7,6 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { PreferencesComponent } from '../preferences/preferences.component';
 import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs/operators';
 
@@ -22,7 +21,6 @@ import { filter } from 'rxjs/operators';
     ButtonModule,
     SidebarModule,
     DropdownModule,
-    PreferencesComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']

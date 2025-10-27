@@ -4,7 +4,7 @@
       <h1 class="section-title">At glance</h1>
   </div>
   </div>
-  <h3 class="intro-summary">
+  <h3 class="summary-text">
   <div *ngIf="profile?.intro_summary" [innerHTML]="profile.intro_summary! | safeHtml"></div>
     </h3>
   <!-- Profile & Welcome Section -->
@@ -14,7 +14,6 @@
       <h2>About me</h2>
       <div *ngIf="profile?.biography" [innerHTML]="profile.biography! | safeHtml"></div>
     </div>
-
     <!-- Right (or bottom on mobile): Welcome Section -->
     <div class="welcome-section">
       <h2>Where to Find Me</h2>
@@ -28,7 +27,6 @@
           </li>
         </ng-container>
       </ul>
-
       <h2>What's Next!</h2>
       <p class="lead">
         If you’re interested in collaborating, hiring, or just chatting tech, feel free to

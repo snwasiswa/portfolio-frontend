@@ -1,3 +1,5 @@
+import { ProjectImage } from '../projectimage/projectimage';
+
 export interface Project {
   id: number;
   name: string;
@@ -12,4 +14,6 @@ export interface Project {
   year?: string;
   technology?: string[];
   get_logo_url: string;
+  images?: ProjectImage[];
+  currentSlide?: number;
 }

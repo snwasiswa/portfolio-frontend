@@ -1,9 +1,9 @@
 <!-- DESKTOP NAVIGATION -->
 <div class="sticky-header desktop-only">
   <p-menubar [model]="menuItems">
-    <!-- Logo (Left Side) -->
+    <!-- Logo -->
     <ng-template pTemplate="start">
-      <div class="logo-initials animated-logo" (click)="scrollTo('home')" style="cursor: pointer;">
+      <div class="logo-initials animated-logo" (click)="scrollTo('home')">
         <span class="logo-text">SW</span>
         <div class="logo-dots">
           <div class="dot dot1"></div>
@@ -15,28 +15,30 @@
 
     <!-- Menu Items -->
     <ng-template pTemplate="menuitem" let-item>
-      <a (click)="item.command?.({ originalEvent: $event, item: item })"
+      <a
+        (click)="item.command?.({ originalEvent: $event, item: item })"
         [ngClass]="{ 'active-link': item.label?.toLowerCase() === activeSection }">
         <i *ngIf="item.icon" [class]="item.icon"></i>
         <span>{{ item.label }}</span>
       </a>
     </ng-template>
 
-    <!-- Right Side: Dropdown + Preferences + Hamburger -->
+    <!-- Right Side: Preferences + Role Switch -->
     <ng-template pTemplate="end">
-      <div class="preferences-wrapper custom-button">
-        <!-- PrimeNG Dropdown -->
-        <p-dropdown [options]="roleOptions" [(ngModel)]="selectedRole" (onChange)="onSwitchRole($event)"
-          optionLabel="label" styleClass="switch-role-dropdown" [style]="{ width: '180px' }">
-          <!-- Selected -->
+      <div class="p-menubar-end">
+        <p-dropdown
+          [options]="roleOptions"
+          [(ngModel)]="selectedRole"
+          (onChange)="onSwitchRole($event)"
+          optionLabel="label"
+          styleClass="switch-role-dropdown"
+          [style]="{ width: '180px' }">
           <ng-template let-option pTemplate="selectedItem">
             <div class="dropdown-item">
               <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
               {{ option?.label }}
             </div>
           </ng-template>
-
-          <!-- Items -->
           <ng-template let-option pTemplate="item">
             <div class="dropdown-item">
               <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
@@ -44,9 +46,6 @@
             </div>
           </ng-template>
         </p-dropdown>
-
-        <!-- Preferences -->
-        <app-preferences></app-preferences>
       </div>
     </ng-template>
   </p-menubar>
@@ -54,7 +53,8 @@
 
 <!-- MOBILE NAVIGATION -->
 <div class="sticky-header mobile-only mobile-top-bar">
-  <div class="logo-initials animated-logo" (click)="scrollTo('home')" style="cursor: pointer;">
+  <!-- Logo -->
+  <div class="logo-initials animated-logo" (click)="scrollTo('home')">
     <span class="logo-text">SW</span>
     <div class="logo-dots">
       <div class="dot dot1"></div>
@@ -63,13 +63,36 @@
     </div>
   </div>
 
-  <p-button icon="pi pi-bars" (onClick)="sidebarVisible = true" [style]="{ 'margin-left': 'auto' }"
-    class="custom-button"></p-button>
+  <!-- Role Switch + Hamburger -->
+  <div class="mobile-controls">
+    <p-dropdown
+      [options]="roleOptions"
+      [(ngModel)]="selectedRole"
+      (onChange)="onSwitchRole($event)"
+      optionLabel="label"
+      appendTo="body"
+      styleClass="switch-role-dropdown mobile-role-dropdown"
+      [style]="{ width: '120px' }">
+      <ng-template let-option pTemplate="selectedItem">
+        <div class="dropdown-item">
+          <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
+          {{ option?.label }}
+        </div>
+      </ng-template>
+      <ng-template let-option pTemplate="item">
+        <div class="dropdown-item">
+          <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
+          {{ option.label }}
+        </div>
+      </ng-template>
+    </p-dropdown>
 
+    <p-button icon="pi pi-bars" (onClick)="sidebarVisible = true" [ngClass]="{'hamburger-button': true, 'desktop-only': false}" class="custom-button hamburger-button"></p-button>
+  </div>
 </div>
 
-<!-- SIDEBAR FOR MOBILE -->
-<p-sidebar [(visible)]="sidebarVisible" [modal]="true" position="left">
+<!-- MOBILE SIDEBAR -->
+<p-sidebar [(visible)]="sidebarVisible" [modal]="true" position="left" class="mobile-only">
   <div class="sidebar-content">
     <div class="sidebar-logo logo-initials animated-logo" (click)="scrollTo('home'); sidebarVisible = false">
       <span class="logo-text">SW</span>
@@ -82,30 +105,11 @@
 
     <div class="mobile-menu">
       <a *ngFor="let item of menuItems"
-        (click)="item.command?.({ originalEvent: $event, item: item }); sidebarVisible = false"
-        [ngClass]="{ 'active-link': item.label?.toLowerCase() === activeSection }">
+         (click)="item.command?.({ originalEvent: $event, item: item }); sidebarVisible = false"
+         [ngClass]="{ 'active-link': item.label?.toLowerCase() === activeSection }">
         <i *ngIf="item.icon" [class]="item.icon"></i>
         {{ item.label }}
       </a>
-    </div>
-
-    <div class="sidebar-role-switch">
-      <p-dropdown [options]="roleOptions" [(ngModel)]="selectedRole" (onChange)="onSwitchRole($event)"
-        optionLabel="label" styleClass="switch-role-dropdown" [style]="{ width: '100%' }">
-        <ng-template let-option pTemplate="selectedItem">
-          <div class="dropdown-item">
-            <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
-            {{ option?.label }}
-          </div>
-        </ng-template>
-
-        <ng-template let-option pTemplate="item">
-          <div class="dropdown-item">
-            <i *ngIf="option.icon" class="pi" [ngClass]="option.icon" style="margin-right: 0.5rem;"></i>
-            {{ option.label }}
-          </div>
-        </ng-template>
-      </p-dropdown>
     </div>
   </div>
 </p-sidebar>
