@@ -59,7 +59,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.projectsService.getProjects().subscribe((projects) => {
       this.academicProjects = projects.filter(p => !p.is_side_project);
       this.sideProjects = projects.filter(p => p.is_side_project);
-      console.log(projects);
     });
   }
 
@@ -93,7 +92,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         this.scroll(this.academicScroll, 300, 'academic');
         this.scroll(this.sideScroll, 300, 'side');
       }
-    }, 3000);
+    }, 7000);
   }
 
   clearScrollInterval(): void {
