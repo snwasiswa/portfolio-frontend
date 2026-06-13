@@ -29,6 +29,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "404.html",
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
@@ -40,6 +45,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/portfolio-frontend/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
