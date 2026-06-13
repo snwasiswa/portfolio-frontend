@@ -35,7 +35,7 @@ jobs:
         echo "{\"apiUrl\": \"${API_URL:-https://api.example.com}\"}" > ./dist/portfolio-frontend/config.json
 
     - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v1
       with:
         path: ./dist/portfolio-frontend
 
