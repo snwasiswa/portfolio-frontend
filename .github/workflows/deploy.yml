@@ -31,12 +31,12 @@ jobs:
       env:
         API_URL: ${{ secrets.API_URL }}
       run: |
-        mkdir -p ./dist/portfolio-frontend
-        echo "{\"apiUrl\": \"${API_URL:-https://api.example.com}\"}" > ./dist/portfolio-frontend/config.json
+        mkdir -p ./dist/portfolio-frontend/browser
+        echo "{\"apiUrl\": \"${API_URL:-https://api.example.com}\"}" > ./dist/portfolio-frontend/browser/config.json
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist/portfolio-frontend
+        publish_dir: ./dist/portfolio-frontend/browser
         force_orphan: true
