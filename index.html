@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-beasties-container>
+<head>
+  <meta charset="utf-8">
+  <title>SW</title>
+  <base href="/portfolio-frontend/">
+  <!-- PrimeNG theme -->
+  <!-- In index.html head -->
+  <link id="app-theme" rel="stylesheet" href="assets/themes/lara-light-blue/theme.css">
+
+  <!-- PrimeNG core -->
+  <link rel="stylesheet" href="https://unpkg.com/primeng/resources/primeng.min.css">
+
+  <!-- PrimeIcons -->
+  <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Google reCAPTCHA script -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<style>html{scroll-behavior:smooth;font-size:16px;background:linear-gradient(135deg,#001f3f,#036,indigo,#00bcd4,#0fc,#000);background-size:800% 800%;animation:gradientShift 30s ease-in-out infinite;color:#fff;background-image:linear-gradient(135deg,#001f3f,#036,indigo,#00bcd4,#0fc,#000),url(https://www.transparenttextures.com/patterns/stardust.png);background-blend-mode:overlay}body{font-size:var(--font-size, 14px);margin:0;position:relative;z-index:2}body:before{content:"";position:fixed;inset:0;z-index:-1;background:inherit;background-attachment:fixed;background-size:cover;opacity:.9}@keyframes gradientShift{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}to{background-position:0% 50%}}#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-4;opacity:.4;pointer-events:none}@media (max-width: 768px){html{font-size:15px;background-size:300% 300%}}@media (max-width: 480px){html{font-size:14px;background-size:200% 200%}}</style><link rel="stylesheet" href="styles-3G2MXVGJ.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-3G2MXVGJ.css"></noscript></head>
+
+<body>
+  <!-- Video Background -->
+  <video autoplay muted loop playsinline preload="auto" id="bg-video">
+    Your browser does not support the video tag.
+    <source src="videos/background.mp4" type="video/mp4">
+  </video>
+
+  <div class="page-container"></div>
+
+  <!-- Angular Root -->
+  <app-root></app-root>
+
+<script src="polyfills-B6TNHZQ6.js" type="module"></script><script src="main-HTPLLTCA.js" type="module"></script></body>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const video = document.getElementById('bg-video');
+    const audio = document.getElementById('intro-audio');
+
+    // Initialize flag to track if audio played
+    audio.isPlaying = false;
+
+    // Play background video
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.warn('Autoplay failed, trying to mute and play:', error);
+          video.muted = true;
+          video.play();
+        });
+      }
+    }
+
+    // Wait for user interaction to play audio (due to browser policies)
+    const playAudioOnce = () => {
+      if (audio && audio.paused && !audio.isPlaying) {
+        audio.play().then(() => {
+          audio.isPlaying = true;  // Mark audio as playing
+        }).catch(err => {
+          console.warn("Audio play blocked:", err);
+        });
+      }
+      // Remove listeners after first interaction
+      window.removeEventListener('click', playAudioOnce);
+      window.removeEventListener('keydown', playAudioOnce);
+    };
+
+    window.addEventListener('click', playAudioOnce);
+    window.addEventListener('keydown', playAudioOnce);
+  });
+</script>
+
+</html>
